@@ -11,12 +11,16 @@ def value_from_req(request,key,default):
     if not value:
         return default
     return value
-	
+
 def index(request):
     return render_to_response("index.html",locals(),context_instance=RequestContext(request))
 
 def login(request):
     return render_to_response("dashboard.html",locals(),context_instance=RequestContext(request))
+
+def signup(request):
+    return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
+
 
 def create_user(request):
 

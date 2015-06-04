@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^$', 'tesigners.views.index', name='home'),
     url(r'^new_user/$', 'tesigners.views.create_user', name='create_user'),
 	url(r'^login/$', 'tesigners.views.login', name='login_user'),
+    url(r'^signup/$', 'tesigners.views.signup', name='signup_user'),
     # url(r'^webserver/', include('webserver.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

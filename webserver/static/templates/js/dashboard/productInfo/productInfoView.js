@@ -10,9 +10,9 @@ define(["jqGrid"], function(JQGrid){
 
 	this.isRendered = false;
 
-	
-	
-	
+
+
+
 	this.registerEvents = function(controller){
 		var that = this;
 		$("#addButton").click(function(){
@@ -43,7 +43,7 @@ define(["jqGrid"], function(JQGrid){
 
 		});
 	};
-	
+
 	var populateOptions = function(array){
 		var i = 0;
 		var div = "";
@@ -105,28 +105,28 @@ define(["jqGrid"], function(JQGrid){
                     {name:'Sleeve',index:'Sleeve'},
                     {name:'GSM',index:'GSM'},
 					{name : "Remove", index : 'Remove', formatter: function(){
-						return "<input type='button' value='Remove' class ='removeBtn' ></input>";
+						return "<input type='button' value='Remove' class ='removeBtn btn-primary' ></input>";
 					}}
                 ],
 				gridComplete: function(){
-					
+
 					$(".removeBtn").click(function(event){
 						$(event.currentTarget).parent().parent().attr("id");
-						
+
 						var button = $(event.currentTarget);
 						var cell = button.parent();
 						var row = cell.parent();
 						var index = parseInt(row.attr("id")) - 1 ;
-						
+
 						that.model.supportedEntities.splice(index, 1);
 						that.model.supportedIds.splice(index, 1);
 						 $("#productsTable").jqGrid('setGridParam', { datatype: 'local', sortname: 'T-Shirt type',sortorder: "asc",data: that.model.supportedEntities }).trigger('reloadGrid');
-						
+
 					});
 				},
                 sortname: 'T-Shirt type',
                 sortorder: "asc",
-                height: "auto" 
+                height: "auto"
             });
 
 			this.registerEvents(controller);
