@@ -1,0 +1,86 @@
+.headerLink:hover{
+  text-decoration: none !important;
+}
+
+.buttonClass {
+	background-color : #337ab7;
+	color : white;
+}
+
+.mainDiv{
+	height : 100%;
+}
+
+#bodyDiv{
+	height: 75%;
+  margin-top: 80px;
+}
+
+#footerDiv{
+	height : 10%;
+}
+
+h1.logo {
+  margin-top: 11px;
+  display: inline-flex;
+}
+
+.logo-head{
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.logo-head {
+  font-family: 'Raleway', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+#signupContainer{
+	background-color : #ededed;
+	border-radius: 2%;
+  	margin-top: 2%;
+  	position: relative;
+  	left: 1%;
+}
+
+.titleDiv{
+	padding:5px;
+
+}
+
+.buttonDiv{
+	padding:5px;
+}
+
+.inputDiv{
+	padding:5px;
+	width : 200px;
+}
+
+.signUpRow{
+	height: 300px;
+	background-image : url("../images/seller-day-28-29.jpg");
+	background-size : cover;
+}
+
+#loginContainer {
+	padding-top:30px;
+}
+.loginBtn{
+	margin-left: 6px;
+}
+.sell-in-tesigners{
+	padding: 3em 0;
+  	position: relative;
+  	z-index: 99999;
+  	background: #fff;
+}
+<<<<<<< HEAD
+=======
+
+.icon {
+	padding : 5px;
+}
+>>>>>>> fbf16cd8b38c1d16f0b4a6c1c215c4936fb8656c
