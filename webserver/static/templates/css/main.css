@@ -68,8 +68,15 @@ h1.logo {
 #loginContainer {
 	padding-top:30px;
 }
+
 .loginBtn{
 	margin-left: 6px;
+}
+
+.loginErrorDiv{
+  display:none;
+  color:red;
+  margin-left: 7px;
 }
 .sell-in-tesigners{
 	padding: 3em 0;
@@ -97,4 +104,3 @@ h1.logo {
 .dashboardItemVisible{
 	display : block;
 }
-

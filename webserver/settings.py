@@ -12,8 +12,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE' : 'django_mongodb_engine',
-        'NAME' : 'tesigners'
+        'ENGINE': 'django.db.backends.dummy', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#        'NAME': '',                      # Or path to database file if using sqlite3.
+#        'USER': '',                      # Not used with sqlite3.
+#        'PASSWORD': '',                  # Not used with sqlite3.
+#        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+#        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -44,15 +48,16 @@ USE_TZ = True
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = ''
 
-PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
+PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -101,7 +106,7 @@ WSGI_APPLICATION = 'webserver.wsgi.application'
 
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static/templates')
+   os.path.join(PROJECT_ROOT, 'static/templates')
 )
 
 SESSION_ENGINE = 'mongoengine.django.sessions'
@@ -120,7 +125,7 @@ INSTALLED_APPS = (
     'tesigners',
 	'mongoengine.django.mongo_auth'
     # Uncomment the next line to enable the admin:
-    #'django.contrib.admin',
+    # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -153,7 +158,7 @@ LOGGING = {
         },
     }
 }
-
+from mongoengine import connect
 MONGO_HOST = '127.0.0.1'
 MONGO_PORT = 27017
-
+connect('tesigners',host=MONGO_HOST,port=MONGO_PORT)

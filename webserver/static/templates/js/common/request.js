@@ -48,7 +48,7 @@ define([], function(){
         };
 
 	};
-	
+
 	return Request;
-	
+
 });

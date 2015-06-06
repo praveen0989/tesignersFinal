@@ -1,18 +1,35 @@
 define([], function(){
 
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};
+
+
     var RequestDispatcher = function(){
-        
+
         var oXHR;
-        this.executeRequest = function (oRequest, successCallBack, failureCallBack) {           
-        
+        this.executeRequest = function (oRequest, successCallBack, failureCallBack) {
+          var csrftoken = getCookie('csrftoken');
+
             oXHR = $.ajax({
                 url: oRequest.getRequestUrl(),
-                type: oRequest.getXhrRequestType(),           
-                //data: oRequest.getRequestString(),
-                /*headers: {
-                    "x-sap-request-language": Locale.getViewingLocale(),
-                    "X-CSRF-Token": Helpers.CommonHelpers.getCsrfToken()
-                },*/
+                type: "POST",
+                data: oRequest.getRequestData(),
+                headers: {
+                    "X-CSRFToken": csrftoken
+                },
                 success: successCallBack,
                 error: failureCallBack
             });
@@ -24,7 +41,7 @@ define([], function(){
         };
 
     };
-    
+
     return RequestDispatcher;
-    
+
 });

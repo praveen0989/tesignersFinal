@@ -19,23 +19,33 @@ def login(request):
     return render_to_response("dashboard.html",locals(),context_instance=RequestContext(request))
 
 def signup(request):
+    email = value_from_req(request,'email_id','')
+    password = value_from_req(request,'password','')
+    phone_number = value_from_req(request,'phoneNumber','')
     return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
 
+def authenticate_user(request):
+
+    email = value_from_req(request,'email_id','')
+    password = value_from_req(request,'password','')
+    seller = Seller.objects(email_id = email).first()
+    if not seller:
+        return HttpResponse(json.dumps({'status':'failed','message':'User does not exist'}))
+    validLogin = seller.check_password(password)
+    if not validLogin:
+        return HttpResponse(json.dumps({'status':'failed','message':'Username and password did not match'}))
+    return HttpResponse(json.dumps({'status':'success','message':'login successful'}))
 
 def create_user(request):
 
-    email = value_from_req(request,'email','')
+    email = value_from_req(request,'email_id','')
     password = value_from_req(request,'password','')
-    business_name = value_from_req(request,'business_name','')
-    display_name = value_from_req(request,'display_name','')
-    company_description = value_from_req(request,'company_description')
+    phoneNumber = value_from_req(request,'phoneNumber','')
     seller = Seller.objects(email_id = email).first()
     if not seller:
         seller = Seller()
         seller.email_id = email
-        seller.business_name = business_name
-        seller.display_name = display_name
-        seller.company_description = company_description
+        seller.phoneNumber = phoneNumber
         seller.save()
         seller.set_password(password)
 

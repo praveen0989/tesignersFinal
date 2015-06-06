@@ -1,18 +1,19 @@
 define([], function(){
 
     var RequestDispatcher = function(){
-        
+
         var oXHR;
-        this.executeRequest = function (oRequest, successCallBack, failureCallBack) {           
-        
+        this.executeRequest = function (oRequest, successCallBack, failureCallBack) {
+          var csrftoken = $.cookie('csrftoken');
+          alert(csrftoken);
+
             oXHR = $.ajax({
                 url: oRequest.getRequestUrl(),
-                type: oRequest.getXhrRequestType(),           
+                type: oRequest.getXhrRequestType(),
                 //data: oRequest.getRequestString(),
-                /*headers: {
-                    "x-sap-request-language": Locale.getViewingLocale(),
-                    "X-CSRF-Token": Helpers.CommonHelpers.getCsrfToken()
-                },*/
+                headers: {
+                    "X-CSRF-Token": csrftoken
+                },
                 success: successCallBack,
                 error: failureCallBack
             });
@@ -24,7 +25,7 @@ define([], function(){
         };
 
     };
-    
+
     return RequestDispatcher;
-    
+
 });

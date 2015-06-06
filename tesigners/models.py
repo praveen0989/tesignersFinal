@@ -83,7 +83,7 @@ class BankAccount(Document):
 
 class Seller(Document):
     email_id                 = StringField(db_field='eid',required=False,default='')
-    password                  = StringField(db_field='pass',required=False)
+    password                 = StringField(db_field='pass',required=False)
     business_name            = StringField(db_field='bn',required=True,default='')
     display_name             = StringField(db_field='dn',required=False,default='')
     company_description      = StringField(db_field='desc',required=False,default='')
@@ -145,6 +145,7 @@ class OrderDetails(Document):
     current_status           =  IntField(db_field='cs')
     price                    =  IntField(db_field='pri')
     buyer                    =  ReferenceField(Customer,db_field='bu')
+    seller                   =  ReferenceField(Seller,db_field='sel')
     design_image             =  StringField(db_field='di',required=True)
     all_image                =  StringField(db_field='ai',required=True)
     created_at               =  IntField(required = False, db_field='ct')

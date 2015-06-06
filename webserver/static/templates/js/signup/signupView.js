@@ -26,7 +26,7 @@ define([], function(){
 		var signupTitleDiv = "<div id = 'signuptitle' class='titleDiv'><h4>REGISTER</h4></div>";
 		var divClose = "</div>";
 
-		this.userName = '<input type="text" id = "usernameinputSignup" class="form-control" name="signup" value="" placeholder="Email ID"/>';
+		this.userName = '<input type="email" id = "usernameinputSignup" class="form-control" name="signup" value="" placeholder="Email ID"/>';
 		var signupDiv = '<div id="usernamedivSignup" class="form-group">'+ this.userName + '</div>';
 
 		this. phoneNumber = '<input type="text" id = "phoneNumberinputSignup" class="form-control" name="phoneNumber" value="" placeholder="Phone Number"/>';

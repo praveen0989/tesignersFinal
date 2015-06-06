@@ -10,7 +10,10 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 		this.onSignUp = function(userName, password, phoneNumber){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
-			var successCallBack = function(){
+
+
+			var successCallBack = function(response){
+				console.log(JSON.stringify(response));
 				window.location = "signup"
 			};
 
@@ -18,9 +21,14 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 				//alert("Failure");
 			};
 
+			var dataJson = {"email_id":userName,
+											"password":password,
+											"phoneNumber":phoneNumber
+											};
 			request.setMimeType("application/json");
-			request.setRequestUrl("/signup/");
-			request.setXhrRequestType("GET");
+			request.setRequestUrl("/new_user/");
+			request.setXhrRequestType("POST");
+			request.setRequestData(dataJson);
 
 			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 		};
