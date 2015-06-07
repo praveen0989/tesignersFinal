@@ -11,6 +11,7 @@ define([], function(){
 	this.registerEvents = function(controller){
 		var that = this;
 		$("#submitButton").click(function(){
+
 			controller.onLogin($("#usernameinput").val(), $("#passwordinput").val());
 		});
 	};
