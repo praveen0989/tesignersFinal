@@ -88,8 +88,8 @@ class Seller(Document):
     display_name             = StringField(db_field='dn',required=False,default='')
     company_description      = StringField(db_field='desc',required=False,default='')
     vat                      = StringField(db_field='vat',required=False,default='')
-    address                  = ReferenceField(Address,db_field='add',required=False)
-    bank_acc                 = ReferenceField(BankAccount,db_field='ba',required=False)
+    address                  = ReferenceField(Address,db_field='addr',required=False,reverse_delete_rule=CASCADE)
+    bank_acc                 = ReferenceField(BankAccount,db_field='ba',required=False,reverse_delete_rule=CASCADE)
     created_at               = IntField(required = False, db_field='ct')
     updated_at               = IntField(required = False , db_field='ut')
 
@@ -135,6 +135,12 @@ class PrinterType(Document):
     type                     =  StringField(db_field='typ',required=False)
     min_order                =  IntField(db_field='mo',required=False)
     order_capacity           =  IntField(db_field='oc',required=False)
+
+class Seller_Product(Document):
+
+    seller                   =  ReferenceField(Seller,db_field='se')
+    product                  =  ReferenceField(Product,db_field='prd')
+    price                    =  IntField(db_field='pri',required=False)
 
 class OrderDetails(Document):
 

@@ -10,10 +10,10 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 		this.onSignUp = function(userName, password, phoneNumber){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
+			window.location = "signup"
 
-
-			var successCallBack = function(response){
-				console.log(JSON.stringify(response));
+		/*	var successCallBack = function(response){
+				//response = JSON.parse(response);
 				window.location = "signup"
 			};
 
@@ -30,7 +30,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 			request.setXhrRequestType("POST");
 			request.setRequestData(dataJson);
 
-			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
+			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);*/
 		};
 	};
 	return SignUpController;

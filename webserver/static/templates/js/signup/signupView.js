@@ -18,7 +18,7 @@ define([], function(){
 
 
 	this.render = function(container){
-
+		
 		var rowDiv = "<div class ='row signUpRow'>";
 
 		var signupContainer = "<div id='signupContainer' class='col-md-2 col-md-offset-7 '>";

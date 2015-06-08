@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^new_user/$', 'tesigners.views.create_user', name='create_user'),
 	url(r'^login/$', 'tesigners.views.login', name='login_user'),
     url(r'^signup/$', 'tesigners.views.signup', name='signup_user'),
+    url(r'^dashboard/$', 'tesigners.views.dashboard', name='dashboard'),
     url(r'^authenticate_user/$', 'tesigners.views.authenticate_user', name='authenticate_user'),
     # url(r'^webserver/', include('webserver.foo.urls')),
 

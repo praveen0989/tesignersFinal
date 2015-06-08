@@ -12,13 +12,24 @@ define([], function(){
 			that.moveNext();
 		});
 
-		$("#nextbut2").click(function(){
+		$("#backBtnId").click(function(){
 			that.movePrevious();
 		});
+
+		$("#doneBtnId").click(function(){
+			var data = $(":text").serializeArray();
+			var jsonData = {};
+			for(var i in data){
+				jsonData[data[i].name] = data[i].value;
+    	}
+			jsonData.state = $("#stateListId").val();
+			controller.submitSignupDetails( jsonData);
+		});
+
 	};
 
 	this.getStatesOptionsString = function(){
-		var statesOptions = "<select class='form-control'>";
+		var statesOptions = "<select class='form-control' id='stateListId'>";
 
 		for(var i = 0; i < this.model.states.length; i++){
 
@@ -43,46 +54,53 @@ define([], function(){
 		var header = '<h2>Account Information</h2>';
 		var form = '<form  class="form-horizontal" role="form">';
 		var formClose = '</form>';
-		var businessName = '<div class="form-group"> <label class="control-label col-md-2" for="businessgrp">Business Group</label>  <div class="col-md-6"> <input class="form-control" id="businessgrp" value= '+accountModel.bName +'> </div></div>';
-		var displayName = '<div class="form-group"> <label class="control-label col-md-2" for="displayName">Display Name</label>  <div class="col-md-6"> <input class="form-control" id="displayName" value= '+accountModel.dName +'> </div></div>';
-		var vNum = '<div class="form-group"> <label class="control-label col-md-2" for="vNum">VAT or TIN Number</label>  <div class="col-md-6"> <input class="form-control" id="vNum" value= '+accountModel.vNum +'> </div></div>';
-		var cDesc = '<div class="form-group"> <label class="control-label col-md-2" for="cDesc">Company Description</label>  <div class="col-md-6"> <input class="form-control" id="cDesc" value= '+accountModel.cDesc +'> </div></div>';
-		var addr = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr" value= '+accountModel.addr +'> </div></div>';
-		var pCode = '<div class="form-group"> <label class="control-label col-md-2" for="pCode">Pin Code</label>  <div class="col-md-6"> <input class="form-control" id="pCode" value= '+accountModel.pCode +'> </div></div>';
-		var city = '<div class="form-group"> <label class="control-label col-md-2" for="city">City</label>  <div class="col-md-6"> <input class="form-control" id="city" value= '+accountModel.city +'> </div></div>';
+		var emailId = '<div class="form-group"> <label class="control-label col-md-2" for="eId">Email Id</label>  <div class="col-md-6"> <input class="form-control" id="eId" name="eId" value= '+accountModel.eId +'> </div></div>';
+		var phone = '<div class="form-group"> <label class="control-label col-md-2" for="phoneNumber">Phone Number</label>  <div class="col-md-6"> <input class="form-control" name="pNumber" id="pNumber" value= '+accountModel.pNumber +'> </div></div>';
+		var password = '<div class="form-group"> <label class="control-label col-md-2" for="password">password</label>  <div class="col-md-6"> <input type="password" class="form-control" name="password" id="password" value= '+accountModel.password +'> </div></div>';
+		var businessName = '<div class="form-group"> <label class="control-label col-md-2" for="businessgrp">Legal Name</label>  <div class="col-md-6"> <input class="form-control" name="businessgrp" id="businessgrp" value= '+accountModel.bName +'> </div></div>';
+		var displayName = '<div class="form-group"> <label class="control-label col-md-2" for="displayName">Display Name</label>  <div class="col-md-6"> <input class="form-control" name="displayName" id="displayName" value= '+accountModel.dName +'> </div></div>';
+		var vNum = '<div class="form-group"> <label class="control-label col-md-2" for="vNum">VAT or TIN Number</label>  <div class="col-md-6"> <input class="form-control" id="vNum" name="vNum" value= '+accountModel.vNum +'> </div></div>';
+		var cDesc = '<div class="form-group"> <label class="control-label col-md-2" for="cDesc">Company Description</label>  <div class="col-md-6"> <input class="form-control" id="cDesc" name="cDesc" value= '+accountModel.cDesc +'> </div></div>';
+		var addr1 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address1</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr1" name="addr1" value= '+accountModel.addr1 +'> </div></div>';
+		var addr2 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address2</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr2" name="addr2" value= '+accountModel.addr2 +'> </div></div>';
+		var landmark = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Landmark</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="landmark" name="landmark" value= '+accountModel.landmark +'> </div></div>';
+		var pCode = '<div class="form-group"> <label class="control-label col-md-2" for="pCode">Pin Code</label>  <div class="col-md-6"> <input class="form-control" id="pCode" name="pCode" value= '+accountModel.pCode +'> </div></div>';
+		var city = '<div class="form-group"> <label class="control-label col-md-2" for="city">City</label>  <div class="col-md-6"> <input class="form-control" id="city" name="city" value= '+accountModel.city +'> </div></div>';
 
 		var state = '<div class="form-group"> <label class="control-label col-md-2" for="state">State</label>  <div class="col-md-6"> ';
 		state += this.getStatesOptionsString();
 		state = state + "</div></div>";
 
-
 		var nextButton = '<div class="form-group"> <div class="col-md-2 col-md-push-6"> <button type="button" id ="nextButton" class="btn btn-primary btn-block"> Next</button> </div></div>';
-		page1Container.append(mainDiv + container + header + form + businessName + displayName + vNum + cDesc + addr + pCode + city + state + nextButton + formClose + divClose + divClose );
+		page1Container.append(mainDiv + container + header + form + emailId + password + businessName + displayName + phone + vNum + cDesc + addr1 + addr2 + landmark + pCode + city + state + nextButton + formClose + divClose + divClose );
 
 	};
 
 	this.createBankingInfoPage = function(page2Container){
+
+		var bankInfoModel = this.model.bankDetails;
+
 		var labelNames = ["Account Holder Name","Bank Account Number","Retype Bank Account Number",
 											"Bank Name","Branch","City","State","IFSC Code"];
 
 		var formDiv = '<div class="container" id="page2"> <h2>Banking Information</h2><form class="form-horizontal" role="form">';
 		var formGroupAccountName = '<div class="form-group"><label class="control-label col-md-2" for="AccountHolderName">Account Holder Name </label>'+
-																'<div class="col-md-6"><input type="text" class="form-control" id="accountHolderName" placeholder="Enter Account Holder Name"></div></div>';
+																'<div class="col-md-6"><input type="text" class="form-control" name="acHName" id="aHName" placeholder="Enter Account Holder Name" value'+bankInfoModel.acHName+'></div></div>';
 
 		var formGroupAccountNumber = '<div class="form-group"><label class="control-label col-md-2" for="accountNumber">Bank Account Number </label>'+
-																	'<div class="col-md-6"><input type="password" class="form-control" id="accountNumber" placeholder="Enter Bank Account Number"></div></div>';
+																	'<div class="col-md-6"><input type="password" class="form-control" name="acNumber" id="acNumber" placeholder="Enter Bank Account Number" value'+bankInfoModel.acNumber+'></div></div>';
 
 		var formGroupRetypeAccountNumber = '<div class="form-group"><label class="control-label col-md-2" for="retypeAccountNumber">Retype Bank Account Number </label>'+
-																	'<div class="col-md-6"><input type="text" class="form-control" id="retypeAccountNumber" placeholder="Retype Bank Account Number"></div></div>';
+																	'<div class="col-md-6"><input type="text" class="form-control" name="acNumber2" id="acNumber2" placeholder="Retype Bank Account Number" value'+bankInfoModel.acNumber2+'></div></div>';
 
 		var formGroupBankName = '<div class="form-group"><label class="control-label col-md-2" for="bankName">Bank Name </label>'+
-															    '<div class="col-md-6"><input type="text" class="form-control" id="bankName" placeholder="Enter Bank Name"></div></div>';
+															    '<div class="col-md-6"><input type="text" class="form-control" name="bankName" id="bankName" placeholder="Enter Bank Name" value'+bankInfoModel.bankName+'></div></div>';
 
 		var formGroupBranchName = '<div class="form-group"><label class="control-label col-md-2" for="branchName">Branch Name </label>'+
-															    '<div class="col-md-6"><input type="text" class="form-control" id="bankName" placeholder="Enter Branch Name"></div></div>';
+															    '<div class="col-md-6"><input type="text" class="form-control" name="branchName" id="branchName" placeholder="Enter Branch Name" value'+bankInfoModel.branchName+'></div></div>';
 
 		var formGroupIfsc = '<div class="form-group"><label class="control-label col-md-2" for="ifscCode">IFSC Code </label>'+
-															    '<div class="col-md-6"><input type="text" class="form-control" id="ifscCode" placeholder="Enter IFSC Code"></div></div>';
+															    '<div class="col-md-6"><input type="text" class="form-control" name="ifsc" id="ifsc" placeholder="Enter IFSC Code" value'+bankInfoModel.ifsc+'></div></div>';
 
     var formGroupBankCity = '<div class="form-group"><label class="control-label col-md-2" for="bankCity">City </label>'+
 															    '<div class="col-md-6"><input type="text" class="form-control" id="bankCity" placeholder="Enter city"></div></div>';
@@ -90,13 +108,13 @@ define([], function(){
 		var formGroupBankState = '<div class="form-group"><label class="control-label col-md-2" for="bankState">State </label>'+
 															    '<div class="col-md-6">'+ this.getStatesOptionsString() + '</div></div>';
 
-	  var formGroupButton = '<div class="form-group"><div class="col-md-2 col-md-push-4"><button type="submit" class="btn btn-primary btn-block">Back</button></div>'+
-																	'<div class="col-md-2 col-md-push-4"><button type="submit" class="btn btn-primary btn-block">Done</button></div></div>';
+	  var formGroupButton = '<div class="form-group"><div class="col-md-2 col-md-push-4"><button id="backBtnId" type="button" class="btn btn-primary btn-block">Back</button></div>'+
+																	'<div class="col-md-2 col-md-push-4"><button id="doneBtnId" type="button" class="btn btn-primary btn-block">Done</button></div></div>';
 
 		var formDivClose = '</form></div>';
 
 	  var form = formDiv + formGroupAccountName + formGroupAccountNumber + formGroupRetypeAccountNumber +formGroupBankName
-							+	formGroupBranchName + formGroupIfsc + formGroupBankCity + formGroupBankState + formGroupButton +formDivClose;
+							+	formGroupBranchName + formGroupIfsc /*+ formGroupBankCity + formGroupBankState*/ + formGroupButton +formDivClose;
 
 		page2Container.append(form);
 
@@ -133,7 +151,7 @@ define([], function(){
 			$("#page3").hide();
 			$("#page1").show();
 			currentPageId = "page1";
-			return;
+			return false;
 		}
 
 		if(currentPageId === "page3"){
@@ -141,7 +159,7 @@ define([], function(){
 			$("#page2").show();
 			$("#page1").hide();
 			currentPageId = "page2";
-			return;
+			return false;
 		}
 
 
@@ -150,6 +168,7 @@ define([], function(){
 	this.render = function(container){
 
 		if(!this.isRendered){
+			//controller.init();
 		var page1 = $("<div></div>");
 		this.createAccountsPage(page1);
 

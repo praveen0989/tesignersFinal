@@ -16,6 +16,14 @@ define([], function(){
 		});
 	};
 
+	this.renderPendingOrders = function(container){
+
+		var mainDiv = "<div id='page1'>";
+		var divClose = "</div>";
+		var pedingOrderList = this.model.pendingOrderList;
+
+	}
+
 	var showOrdersInfoPage = function(){
 		$('#productDiv').css('display','none');
 		$('#paymentsDiv').css('display','none');
@@ -33,6 +41,8 @@ define([], function(){
 			this.isRendered = true;
 		}
 	};
+
+
 };
 
 return OrdersView;

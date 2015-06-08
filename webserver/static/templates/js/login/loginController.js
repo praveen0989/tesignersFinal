@@ -9,15 +9,27 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 		this.onLogin = function(userName, password){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
-			var successCallBack = function(response){
-				response = JSON.parse(response);
-				if(response.status === "failed"){
-					$('#loginErrorDiv').html(response.message);
+			if( userName === ""){
+					$('#loginErrorDiv').html("Please enter user email");
 					$('#loginErrorDiv').css("display","block");
+					$('#usernameinput').focus();
+					return;
+				} else if( password === ""){
+					$('#loginErrorDiv').html("Please enter password");
+					$('#loginErrorDiv').css("display","block");
+					$('#passwordinput').focus();
+					return;
+				}
 
-				}else{
-				window.location = "login";
-			}
+			var successCallBack = function(response){
+					response = JSON.parse(response);
+					if(response.status === "failed"){
+						$('#loginErrorDiv').html(response.message);
+						$('#loginErrorDiv').css("display","block");
+
+					}else{
+						window.location = "login";
+					}
 			};
 
 			var failureCallBack = function(){
