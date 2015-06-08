@@ -36,6 +36,7 @@ define([], function(){
 
 		showOrdersInfoPage();
 		if(!this.isRendered){
+			this.controller.loadOrders("amit_oct25@yahoo.com","1");
 			container.append("Orders");
 			this.registerEvents(controller);
 			this.isRendered = true;

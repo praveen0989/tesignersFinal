@@ -138,9 +138,16 @@ class PrinterType(Document):
 
 class Seller_Product(Document):
 
-    seller                   =  ReferenceField(Seller,db_field='se')
-    product                  =  ReferenceField(Product,db_field='prd')
-    price                    =  IntField(db_field='pri',required=False)
+    seller                   =  ReferenceField(Seller,db_field='sps')
+    product                  =  ReferenceField(Product,db_field='spp')
+    price                    =  IntField(db_field='sppr',required=False)
+
+class ShippingDetails(Document):
+
+    tracking_id                      = StringField(db_field='ti', required = False)
+    shipping_address                 = ReferenceField(Address,db_field='sad')
+    shipping_type                    = StringField(db_field='st', required = False)
+
 
 class OrderDetails(Document):
 
@@ -154,6 +161,7 @@ class OrderDetails(Document):
     seller                   =  ReferenceField(Seller,db_field='sel')
     design_image             =  StringField(db_field='di',required=True)
     all_image                =  StringField(db_field='ai',required=True)
+    shipping_detail          =  ReferenceField(ShippingDetails,db_field='sd')
     created_at               =  IntField(required = False, db_field='ct')
     updated_at               =  IntField(required = False , db_field='ut')
 

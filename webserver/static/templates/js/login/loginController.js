@@ -28,7 +28,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 						$('#loginErrorDiv').css("display","block");
 
 					}else{
-						window.location = "login";
+						window.location = "dashboard";
 					}
 			};
 

@@ -10,10 +10,10 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
     url(r'^$', 'tesigners.views.index', name='home'),
     url(r'^new_user/$', 'tesigners.views.create_user', name='create_user'),
-	url(r'^login/$', 'tesigners.views.login', name='login_user'),
     url(r'^signup/$', 'tesigners.views.signup', name='signup_user'),
     url(r'^dashboard/$', 'tesigners.views.dashboard', name='dashboard'),
     url(r'^authenticate_user/$', 'tesigners.views.authenticate_user', name='authenticate_user'),
+    url(r'^orders/$', 'tesigners.views.show_order', name='show_order'),
     # url(r'^webserver/', include('webserver.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -96,12 +96,15 @@ def create_user(request):
     return HttpResponse(json.dumps({'status':'success','message':'signup successful'}))
 
 
-def show_my_order(request):
-    seller_id = value_from_req(request,'seller_id','')
-    seller = Seller(id=seller_id).first()
+def show_order(request):
+    seller_id = value_from_req(request,'email_id','')
+    order_type = value_from_req(request,'type','')
+    pdb.set_trace()
+    seller = Seller.objects(email_id=seller_id).first()
+    pdb.set_trace()
     if seller:
         orders = []
-        for order in OrderDetails.objects(seller=seller):
+        for order in OrderDetails.objects(seller=seller,current_status__lte=7):
             orders.append({'status':order.current_status,'quantity':order.quantity,'prod_type':order.product.type})
 
         return HttpResponse(json.dumps({'status':True,'response':orders}))
