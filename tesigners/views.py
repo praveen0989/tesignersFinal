@@ -61,7 +61,6 @@ def create_user(request):
 
     seller = Seller.objects(email_id = email).first()
     if not seller:
-        pdb.set_trace()
         address = Address()
         address.address_ine_1 = addr1
         address.address_ine_2 = addr2
@@ -70,7 +69,6 @@ def create_user(request):
         address.state = state
         address.pincode = int('0' +pincode)
         address.save()
-        pdb.set_trace()
 
         bankAccount = BankAccount()
         bankAccount.holder_name = acHName
@@ -79,7 +77,6 @@ def create_user(request):
         bankAccount.branch = branchName
         bankAccount.ifsc = ifsc
         bankAccount.save()
-        pdb.set_trace()
 
         seller = Seller()
         seller.email_id = email
