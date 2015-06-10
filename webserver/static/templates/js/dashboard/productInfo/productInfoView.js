@@ -15,8 +15,8 @@ define(["jqGrid"], function(JQGrid){
 
 	this.registerEvents = function(controller){
 		var that = this;
-		$("#addButton").click(function(){
 
+		$("#addButton").click(function(){
 
 			var tShirtType = $('#shirtType').val();
 			var fabricType = $('#fabricType').val();
@@ -31,10 +31,11 @@ define(["jqGrid"], function(JQGrid){
 
 			that.model.supportedIds.push(tShirtId + fabricId + sleeveId + gsmId + categoryId);
 			var obj = {
-						"T Shirt type" : tShirtType,
-						"Fabric Type" : fabricType,
-						"Sleeve" : sleeveType,
-						"GSM" : gsmType
+						"ptype" : "TS",
+						"psubtype" : tShirtType,
+						"fabric" : fabricType,
+						"slv" : sleeveType,
+						"mat" : gsmType
 					  };
 
 
@@ -42,6 +43,14 @@ define(["jqGrid"], function(JQGrid){
 			 $("#productsTable").jqGrid('setGridParam', { datatype: 'local', sortname: 'T-Shirt type',sortorder: "asc",data: that.model.supportedEntities }).trigger('reloadGrid');
 
 		});
+
+		$("#saveButton").click(function(){
+				var formData = {};
+				formData.sId = "amit_oct225@yahoo.com";
+				formData.plist = that.model.supportedEntities;
+				controller.saveProductDetails(formData);
+		});
+
 	};
 
 	var populateOptions = function(array){
@@ -94,16 +103,19 @@ define(["jqGrid"], function(JQGrid){
 			var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='productsTable' class='table table-bordered table-hover'></table></div>";
 			container.append(tableDiv);
 
+			var saveButton = "<div class='col-md-1'><button name='saveButton' id='saveButton' type='button' class='form-control btn btn-primary'>Save</button></div></div>	";
+			container.append(saveButton);
+
 			var that = this;
 			$("#productsTable").jqGrid({
                 datatype: "local",
                 data: this.model.supportedEntities,
                 colNames:['T Shirt type','Fabric type', 'Sleeve','GSM', 'Remove'],
                 colModel:[
-                    {name:'T Shirt type',index:'T-Shirt Type'},
-                    {name:'Fabric Type',index:'Fabric Type'},
-                    {name:'Sleeve',index:'Sleeve'},
-                    {name:'GSM',index:'GSM'},
+                    {name:'psubtype',index:'psubtype'},
+                    {name:'fabric',index:'fabric'},
+                    {name:'slv',index:'slv'},
+                    {name:'mat',index:'mat'},
 					{name : "Remove", index : 'Remove', formatter: function(){
 						return "<input type='button' value='Remove' class ='removeBtn btn-primary' ></input>";
 					}}

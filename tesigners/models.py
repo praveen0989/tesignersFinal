@@ -124,6 +124,7 @@ class Product(Document):
     sleeves                  =  StringField(db_field='sle',required=False)
     fabric                   =  StringField(db_field='fab',required=False)
     material                 =  IntField(db_field='mat',required=False)
+    price                    =  IntField(db_field='ppr')
 
     meta = {
             'allow_inheritance':True
@@ -135,12 +136,14 @@ class PrinterType(Document):
     type                     =  StringField(db_field='typ',required=False)
     min_order                =  IntField(db_field='mo',required=False)
     order_capacity           =  IntField(db_field='oc',required=False)
+    printing_price           =  IntField(db_field='ptpr',required=False)
 
 class Seller_Product(Document):
 
     seller                   =  ReferenceField(Seller,db_field='sps')
     product                  =  ReferenceField(Product,db_field='spp')
     price                    =  IntField(db_field='sppr',required=False)
+    product_sku              =  StringField(db_field='psku', required = False)
 
 class ShippingDetails(Document):
 

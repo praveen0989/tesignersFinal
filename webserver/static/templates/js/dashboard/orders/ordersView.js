@@ -30,17 +30,42 @@ define([], function(){
 		$('#metricsDiv').css('display','none');
 		$('#accountsDiv').css('display','none');
 		$('#ordersDiv').css('display','block');
+
+		//controller.getPendingOrders(model,"amit_oct25@yahoo.com","1");
+
+
 	}
 
 	this.render = function(container){
 
 		showOrdersInfoPage();
 		if(!this.isRendered){
-			this.controller.loadOrders("amit_oct25@yahoo.com","1");
 			container.append("Orders");
-			this.registerEvents(controller);
+			var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='ordersTable' class='table table-bordered table-hover'></table></div>";
+			container.append(tableDiv);
+
+			var that = this;
+			$("#ordersTable").jqGrid({
+                datatype: "local",
+                data: this.model.pendingOrders,
+                colNames:['Image','Description', 'Quantity','Price', 'Status'],
+                colModel:[
+                    {name:'img',index:'img'},
+                    {name:'description',index:'description'},
+                    {name:'qty',index:'qty'},
+                    {name:'price',index:'price'},
+										{name : "status", index : 'status'}
+                ],
+                sortname: 'Image',
+                sortorder: "asc",
+                height: "auto"
+            });
+
 			this.isRendered = true;
+			this.registerEvents(controller);
 		}
+
+
 	};
 
 

@@ -7,27 +7,27 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 		var request = new Request();
 
 
-		this.loadOrders = function(email,type){
+		this.getPendingOrders = function(model, email_id, type){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
 			var successCallBack = function(response){
-
+				response = JSON.parse(response);
+				model.pendingOrders = response.response;
 			};
 
 			var failureCallBack = function(){
 				//alert("Failure");
 			};
 
+			var dataJson = {'email_id':email_id, 'type':type};
+
 			request.setMimeType("application/json");
 			request.setRequestUrl("/orders/");
 			request.setXhrRequestType("POST");
-			var dataJson = {"email_id":email,
-											"type":type
-											};
 			request.setRequestData(dataJson);
-
 			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 		};
+
 
 
 
