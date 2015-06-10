@@ -1,7 +1,7 @@
 define(["dashboard/dashboard", "account/account",
-		"metrics/metrics", "orders/orders", "productInfo/productInfo", "payment/payment"
+		"metrics/metrics", "pendingOrders/pendingOrders", "completedOrders/completedOrders", "cancelledOrders/cancelledOrders","productInfo/productInfo", "payment/payment"
 		
-	], function(Dashboard, Account, Metrics, Orders, ProductInfo, Payment){
+	], function(Dashboard, Account, Metrics, PendingOrders,CompletedOrders, CancelledOrders, ProductInfo, Payment){
 
 	return({
 		"dashboard" : {
@@ -19,11 +19,23 @@ define(["dashboard/dashboard", "account/account",
 				return new Metrics();
 			}
 		},
-		"orders" : {
+		"pendingOrders" : {
 			module : function(){
-				return new Orders();
+				return new PendingOrders();
 			}
 		},
+		"completedOrders" : {
+			module : function(){
+				return new CompletedOrders();
+			}
+		},
+		
+		"cancelledOrders" : {
+			module : function(){
+				return new CancelledOrders();
+			}
+		},
+		
 		"productInfo" : {
 			module : function(){
 				return new ProductInfo();
