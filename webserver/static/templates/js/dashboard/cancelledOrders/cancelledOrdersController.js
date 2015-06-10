@@ -1,18 +1,19 @@
 
 define(["common/requestDispatcher", "common/request"], function(RequestDispatcher, Request){
-	var OrdersController = function(app){
+	var CancelledOrdersController = function(app){
 
 		this.app = app;
 		var requestDispatcher = new RequestDispatcher();
 		var request = new Request();
 
 
-		this.getPendingOrders = function(model, email_id, type){
+		this.getCancelledOrders = function(model, email_id, type){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
 			var successCallBack = function(response){
 				response = JSON.parse(response);
-				model.pendingOrders = response.response;
+				model.ordersData = response.response;
+				$("#ordersTable").jqGrid('setGridParam', { datatype: 'local', data: model.ordersData }).trigger('reloadGrid');
 			};
 
 			var failureCallBack = function(){
@@ -32,5 +33,5 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 
 
 	};
-	return OrdersController;
+	return CancelledOrdersController;
 });

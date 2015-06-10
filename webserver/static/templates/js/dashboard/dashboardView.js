@@ -8,12 +8,13 @@ define([], function(){
 	this.keepMeLoggedIn;
 	this. phoneNumber;
 
-	var renderComponent = function(id, container){
+	var renderComponent = function(id, container, type){
+		
 		var component = controller.app.getComponent(id);
 		if(!component){
-			controller.app.loadComponent(id, container);
+			controller.app.loadComponent(id, container,type);
 		} else {
-			component.view.render(container);
+			component.view.render(container, type);
 		}
 	};
 
@@ -53,15 +54,15 @@ define([], function(){
 		});
 
 		$("#pendingOrders").click(function(){
-			renderComponent("orders", $("#ordersDiv"));
+			renderComponent("pendingOrders", $("#ordersDiv"));
 		});
 
 		$("#completedOrders").click(function(){
-			renderComponent("orders", $("#ordersDiv"));
+			renderComponent("completedOrders", $("#ordersDiv"));
 		});
 
 		$("#cancelledOrders").click(function(){
-			renderComponent("orders", $("#ordersDiv"));
+			renderComponent("cancelledOrders", $("#ordersDiv"));
 		});
 
 		$("#metrics").click(function(){
