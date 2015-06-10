@@ -10,7 +10,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
 			var successCallBack = function(response){
-				window.location = "dashboard.html";
+				window.location = "/dashboard";
 			};
 
 			var failureCallBack = function(){
@@ -20,7 +20,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 			request.setMimeType("application/json");
 			request.setRequestUrl("/products/");
 			request.setXhrRequestType("POST");
-			request.setRequestData(jsonData);
+			request.setRequestData(JSON.stringify(jsonData));
 
 			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 		};

@@ -14,14 +14,11 @@ def value_from_req(request,key,default):
         return default
     return value
 
-def listvalue_from_req(request,key,default):
-    value = getattr(request, 'GET').getlist(key)
-    if not value:
-        value = getattr(request, 'POST').getlist(key)
-    pdb.set_trace()
-    if not value:
-        return default
-    return value
+def int_or_0(value):
+    try:
+        return int(value)
+    except:
+        return 0
 
 def index(request):
     return render_to_response("index.html",locals(),context_instance=RequestContext(request))
@@ -105,26 +102,24 @@ def create_user(request):
     return HttpResponse(json.dumps({'status':'success','message':'signup successful'}))
 
 def store_seller_supported_products(request):
-    seller_id = value_from_req(request,'sId','')
-    product_list = listvalue_from_req(request,'plist[]','[]')
-    printing_type_list = listvalue_from_req(request,'ptlist[]','[]')
-    pdb.set_trace()
+    data=json.loads(request.body)
+    seller_id = data['sId']
+    product_list = data['plist']
+    printing_type_list = data['ptlist']
 
     seller = Seller.objects(email_id=seller_id).first()
     if seller:
         for item in product_list:
-
-            productType = value_from_req(request,'item.ptype','')
-            productSubType = value_from_req(request,'item.psubtype','')
-            price = value_from_req(request,'item.price','')
+            productType =  item['ptype']
+            productSubType =  item['psubtype']
+            price = item['tsprice']
             #sku = value_from_req(request,'item.sku','')
-            size = value_from_req(request,'item.size','')
-            color = value_from_req(request,'item.color','')
-            sleeves = value_from_req(request,'item.slv','')
-            fabric = value_from_req(request,'item.fabric','')
-            material = value_from_req(request,'item.mat','')
+            #size = item['size']
+            #color = item['color']
+            sleeves = item['slv']
+            fabric = item['fabric']
+            material = item['mat']
 
-            pdb.set_trace()
             #seller_product = Seller_Product()
             #seller_product.seller = seller;
             #seller_product.price = price
@@ -135,31 +130,29 @@ def store_seller_supported_products(request):
             product.seller=seller
             product.type=productType
             product.subtype=productSubType
-            product.size=size
-            product.color=color
+            #product.size=size
+            #product.color=color
             product.sleeves=sleeves
             product.fabric=fabric
-            product.material=material
-            product.price=price
+            product.material=int_or_0(material)
+            product.price=int_or_0(price)
             product.save()
-            pdb.set_trace()
 
         for item in printing_type_list:
-            printingType = value_from_req(request,'item.pttyp','')
-            min_order = value_from_req(request,'item.morder','')
-            order_capacity= value_from_req(request,'item.ocap','')
-            printing_price = value_from_req(request,'item.ptprice','')
+            printingType = item['pttyp']
+            min_order = item['morder']
+            order_capacity= item['ocap']
+            printing_price = item['ptprice']
 
             printer_type = PrinterType()
             printer_type.seller = seller;
             printer_type.type = printingType;
-            printer_type.min_order = min_order;
-            printer_type.order_capacity = order_capacity;
-            printer_type.printing_price = printing_price;
+            printer_type.min_order = int_or_0(min_order);
+            printer_type.order_capacity = int_or_0(order_capacity)
+            printer_type.printing_price = int_or_0(printing_price)
             printer_type.save()
-            pdb.set_trace()
 
-        return HttpResponse(json.dumps({'status':'success','message':'signup successful'}))
+        return HttpResponse(json.dumps({'status':'success','message':'Selected product categories added successfully'}))
 
 
 def show_order(request):
