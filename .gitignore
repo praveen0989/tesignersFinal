@@ -64,3 +64,6 @@ tesigners/models.pyc
 webserver/__init__.pyc
 webserver/settings.pyc
 webserver/wsgi.pyc
+mongoengine/django/sessions.pyc
+tesigners/views.pyc
+webserver/urls.pyc
