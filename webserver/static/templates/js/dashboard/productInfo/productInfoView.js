@@ -33,12 +33,12 @@ define(["jqGrid"], function(JQGrid){
 
 			that.model.supportedIds.push(tShirtId + fabricId + sleeveId + gsmId + priceId + categoryId);
 			var obj = {
-						"ptype" : "TS",
-						"psubtype" : tShirtType,
-						"fabric" : fabricType,
-						"slv" : sleeveType,
-						"mat" : gsmType,
-						"tsprice":tsPrice
+						"k1ptype" : "TS",
+						"k2psubtype" : tShirtType,
+						"k3fabric" : fabricType,
+						"k4sleeves" : sleeveType,
+						"k5material" : gsmType,
+						"k6price":tsPrice
 					  };
 
 
@@ -49,7 +49,7 @@ define(["jqGrid"], function(JQGrid){
 
 		$("#saveButton").click(function(){
 				var formData = {};
-				formData.sId = "amit_oct25@yahoo.com";
+				formData.sId = "praveen0989@gmail.com";
 				formData.plist = that.model.supportedEntities;
 				formData.ptlist = [];
 				controller.saveProductDetails(formData);
@@ -74,6 +74,8 @@ define(["jqGrid"], function(JQGrid){
 		$('#metricsDiv').css('display','none');
 		$('#accountsDiv').css('display','none');
 		$('#productDiv').css('display','block');
+		
+		controller.initModel(model);
 	};
 
 	this.render = function(container){
@@ -116,14 +118,15 @@ define(["jqGrid"], function(JQGrid){
 			$("#productsTable").jqGrid({
                 datatype: "local",
                 data: this.model.supportedEntities,
-                colNames:['T Shirt type','Fabric type', 'Sleeve','GSM','Price' ,'Remove'],
+                colNames:['Type', 'T Shirt type','Fabric type', 'Sleeve','GSM','Price' ,'Remove'],
                 colModel:[
-                    {name:'psubtype',index:'psubtype'},
-                    {name:'fabric',index:'fabric'},
-                    {name:'slv',index:'slv'},
-                    {name:'mat',index:'mat'},
-										{name:'tsprice',index:'tsprice'},
-										{name : "Remove", index : 'Remove', formatter: function(){
+					{name:'k1ptype',index:'k1ptype', hidden: true},
+                    {name:'k2psubtype',index:'k2psubtype'},
+                    {name:'k3fabric',index:'k3fabric'},
+                    {name:'k4sleeves',index:'k4sleeves'},
+                    {name:'k5material',index:'k5material'},
+					{name:'k6price',index:'k6price'},
+					{name : "Remove", index : 'Remove', formatter: function(){
 						return "<input type='button' value='Remove' class ='removeBtn btn-primary' ></input>";
 					}}
                 ],
@@ -134,7 +137,6 @@ define(["jqGrid"], function(JQGrid){
 				gridComplete: function(){
 
 					$(".removeBtn").click(function(event){
-						$(event.currentTarget).parent().parent().attr("id");
 
 						var button = $(event.currentTarget);
 						var cell = button.parent();
@@ -143,11 +145,13 @@ define(["jqGrid"], function(JQGrid){
 
 						that.model.supportedEntities.splice(index, 1);
 						that.model.supportedIds.splice(index, 1);
-						 $("#productsTable").jqGrid('setGridParam', { datatype: 'local', sortname: 'T-Shirt type',sortorder: "asc",data: that.model.supportedEntities }).trigger('reloadGrid');
+						var allParameters = $("#productsTable").jqGrid("getGridParam");
+						allParameters.data = that.model.supportedEntities;
+						 $("#productsTable").jqGrid('setGridParam', { datatype: 'local',data: that.model.supportedEntities }).trigger('reloadGrid');
 
 					});
 				},
-                sortname: 'T-Shirt type',
+                sortname: 'k1ptype',
                 sortorder: "asc",
                 height: "auto"
             });
