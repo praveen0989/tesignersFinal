@@ -39,7 +39,7 @@ define([], function(){
 
 		showOrdersInfoPage();
 		container.html("Pending Orders");
-		var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='ordersTable' class='table table-bordered table-hover'></table></div>";
+		var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='ordersTable' class='table table-bordered table-hover'></table><div id='tablePager' ></div></div>";
 		container.append(tableDiv);
 		
 		$("#ordersTable").jqGrid({
@@ -53,9 +53,16 @@ define([], function(){
 				{name:'key4price',index:'key4price'},
 				{name : "key5status", index : 'key5status'}
 			],
-			sortname: 'Image',
+			sortname: 'key1img',
+			viewrecords: true,
 			sortorder: "asc",
-			height: "auto"
+			height: "auto",
+			shrinkToFit: false,
+			pager : "#tablePager",
+			gridComplete : function(){
+			
+			//$("#ordersTable").jqGrid('filterToolbar',{searchOperators : true});
+			}
 		});
 
 		this.registerEvents(controller);
