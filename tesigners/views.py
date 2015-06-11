@@ -158,9 +158,9 @@ def store_seller_supported_products(request):
 def show_order(request):
     seller_id = value_from_req(request,'email_id','')
     order_type = value_from_req(request,'type','')
-	
+
     seller = Seller.objects(email_id=seller_id).first()
-    
+
     if seller:
         orders = []
         if order_type == '0':
@@ -174,5 +174,26 @@ def show_order(request):
         elif order_type == '2':
             for order in OrderDetails.objects(seller=seller,current_status__gt=9):
                 orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
-                
+
+        return HttpResponse(json.dumps({'status':True,'response':orders}, sort_keys=True))
+
+def get_seller_details(request):
+    seller_id = value_from_req(request,'email_id','')
+    
+    seller = Seller.objects(email_id=seller_id).first()
+
+    if seller:
+        orders = []
+        if order_type == '0':
+            for order in OrderDetails.objects(seller=seller,current_status__lt=7):
+                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+
+        elif order_type == '1':
+            for order in OrderDetails.objects(seller=seller,current_status__gte=7, current_status__lte=9):
+                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+
+        elif order_type == '2':
+            for order in OrderDetails.objects(seller=seller,current_status__gt=9):
+                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+
         return HttpResponse(json.dumps({'status':True,'response':orders}, sort_keys=True))
