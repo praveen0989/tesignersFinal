@@ -6,6 +6,31 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 		var requestDispatcher = new RequestDispatcher();
 		var request = new Request();
 
+		this.initModel = function(model){
+			var successCallBack = function(response){
+				response = JSON.parse(response);
+				model.supportedEntities = response.supportedEntities;
+				model.supportedIds = response.supportedIds;
+				model.supportedPrinters = response.supportedPrinters;
+				$("#productsTable").jqGrid('setGridParam', { datatype: 'local', sortname: 'T-Shirt type',sortorder: "asc",data: model.supportedEntities }).trigger('reloadGrid');
+			};
+
+			var failureCallBack = function(){
+				//alert("Failure");
+			};
+			
+			var jsonData= {'email_id':'praveen0989@gmail.com'};
+			
+			request.setMimeType("application/json");
+			request.setRequestUrl("/getproducts/");
+			request.setXhrRequestType("POST");
+			request.setRequestData(jsonData);
+
+			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
+		};
+	
+		
+		
 		this.saveProductDetails = function(jsonData){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));

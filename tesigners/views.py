@@ -107,18 +107,20 @@ def store_seller_supported_products(request):
     product_list = data['plist']
     printing_type_list = data['ptlist']
 
+    
     seller = Seller.objects(email_id=seller_id).first()
     if seller:
+        Product.objects(seller=seller).delete()
         for item in product_list:
-            productType =  item['ptype']
-            productSubType =  item['psubtype']
-            price = item['tsprice']
+            productType =  item['k1ptype']
+            productSubType =  item['k2psubtype']
+            price = item['k6price']
             #sku = value_from_req(request,'item.sku','')
             #size = item['size']
             #color = item['color']
-            sleeves = item['slv']
-            fabric = item['fabric']
-            material = item['mat']
+            sleeves = item['k4sleeves']
+            fabric = item['k3fabric']
+            material = item['k5material']
 
             #seller_product = Seller_Product()
             #seller_product.seller = seller;
@@ -139,10 +141,10 @@ def store_seller_supported_products(request):
             product.save()
 
         for item in printing_type_list:
-            printingType = item['pttyp']
-            min_order = item['morder']
-            order_capacity= item['ocap']
-            printing_price = item['ptprice']
+            printingType = item['k1type']
+            min_order = item['k2min_order']
+            order_capacity= item['k3order_capacity']
+            printing_price = item['k4printing_price']
 
             printer_type = PrinterType()
             printer_type.seller = seller;
@@ -153,6 +155,45 @@ def store_seller_supported_products(request):
             printer_type.save()
 
         return HttpResponse(json.dumps({'status':'success','message':'Selected product categories added successfully'}))
+
+
+
+def get_seller_supported_products(request):
+    seller_id= value_from_req(request,'email_id','')
+
+    seller = Seller.objects(email_id=seller_id).first()
+    products = Product.objects(seller=seller)
+    supportedproducts = []
+    if products:
+        for item in products:
+            productType =  item.type
+            productSubType =  item.subtype
+            fabric = item.fabric
+            sleeves = item.sleeves
+            material = item.material
+            price = item.price
+            #sku = value_from_req(request,'item.sku','')
+            #size = item['size']
+            #color = item['color']
+            supportedproducts.append({"k1ptype": productType, "k2psubtype": productSubType, "k3fabric": fabric, "k4sleeves" : sleeves, "k5material":material, "k6price":price})
+
+            #seller_product = Seller_Product()
+            #seller_product.seller = seller;
+            #seller_product.price = price
+            #seller_product.product_sku = sku
+            #seller_product.save()
+
+    printing_type_list = PrinterType.objects(seller = seller)
+    printing_type = []
+    if printing_type_list:
+        for printer_type in printing_type_list:
+            printingType = printer_type.type
+            min_order = printer_type.min_order
+            order_capacity= printer_type.order_capacity
+            printing_price = printer_type.printing_price
+            printing_type.append({"k1type": printingType, "k2min_order": min_order, "k3order_capacity" :order_capacity, "k4printing_price" : printing_price})
+        
+    return HttpResponse(json.dumps({'status':True,'supportedEntities':supportedproducts, 'supportedIds': [], 'supportedPrinters': printing_type}, sort_keys=True))
 
 
 def show_order(request):

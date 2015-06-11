@@ -105,10 +105,17 @@ define([], function(){
 						{
 							"id":"C3",
 							"name" :"Black"}];
+							
+		this.ptlist = [{
+							"k1type" : "",
+							"k2min_order":"",
+							"k3order_capacity":"",
+							"k4printing_price":""
+					  }];
 
 		this.supportedEntities = [];
 		this.supportedIds = [];
-
+		this.supportedPrinters=[];
 	};
 	return ProductInfoModel;
 });
