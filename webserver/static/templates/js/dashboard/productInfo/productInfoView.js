@@ -100,7 +100,7 @@ define(["jqGrid"], function(JQGrid){
 			container.append( categorySelectDiv + divClose + subcategoryDiv + subcategoryLabel + tShirtCategories + tShirtFabricsCategories + tshirtSleevesCategories + tshirtGsmCategories + addButton + divClose);
 
 
-			var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='productsTable' class='table table-bordered table-hover'></table></div>";
+			var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='productsTable' class='table table-bordered table-hover'></table><div id='tablePager' ></div></div>";
 			container.append(tableDiv);
 
 			var saveButton = "<div class='col-md-1'><button name='saveButton' id='saveButton' type='button' class='form-control btn btn-primary'>Save</button></div></div>	";
@@ -120,6 +120,10 @@ define(["jqGrid"], function(JQGrid){
 						return "<input type='button' value='Remove' class ='removeBtn btn-primary' ></input>";
 					}}
                 ],
+				loadonce:true ,
+				gridview: true,
+				pager : "#tablePager",
+				rowNum: 10,
 				gridComplete: function(){
 
 					$(".removeBtn").click(function(event){
@@ -140,7 +144,7 @@ define(["jqGrid"], function(JQGrid){
                 sortorder: "asc",
                 height: "auto"
             });
-
+			jQuery("#productsTable").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
 			this.registerEvents(controller);
 			this.isRendered = true;
 		}

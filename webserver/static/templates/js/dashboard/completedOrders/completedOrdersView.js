@@ -54,10 +54,12 @@ define([], function(){
 				{name:'key4price',index:'key4price'},
 				{name : "key5status", index : 'key5status'}
 			],
-			sortname: 'Image',
+			sortname: 'key1img',
+			viewrecords: true,
 			sortorder: "asc",
 			height: "auto"
 		});
+		
 
 		this.registerEvents(controller);
 		
