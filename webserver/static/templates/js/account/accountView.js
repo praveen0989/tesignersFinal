@@ -3,6 +3,7 @@ define([], function(){
 	this.controller = controller;
 	this.model = model;
 	this.isRendered = false;
+	this.container;
 	var currentPageId;
 
 	this.registerEvents = function(controller){
@@ -49,6 +50,7 @@ define([], function(){
 		var mainDiv = "<div id='page1'>";
 		var divClose = "</div>";
 		var accountModel = this.model.accountDetails;
+		var addressModel = this.model.accountAddress;
 
 		var container = '<div class="container">';
 		var header = '<h2>Account Information</h2>';
@@ -61,11 +63,11 @@ define([], function(){
 		var displayName = '<div class="form-group"> <label class="control-label col-md-2" for="displayName">Display Name</label>  <div class="col-md-6"> <input class="form-control" name="displayName" id="displayName" value= '+accountModel.dName +'> </div></div>';
 		var vNum = '<div class="form-group"> <label class="control-label col-md-2" for="vNum">VAT or TIN Number</label>  <div class="col-md-6"> <input class="form-control" id="vNum" name="vNum" value= '+accountModel.vNum +'> </div></div>';
 		var cDesc = '<div class="form-group"> <label class="control-label col-md-2" for="cDesc">Company Description</label>  <div class="col-md-6"> <input class="form-control" id="cDesc" name="cDesc" value= '+accountModel.cDesc +'> </div></div>';
-		var addr1 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address1</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr1" name="addr1" value= '+accountModel.addr1 +'> </div></div>';
-		var addr2 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address2</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr2" name="addr2" value= '+accountModel.addr2 +'> </div></div>';
-		var landmark = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Landmark</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="landmark" name="landmark" value= '+accountModel.landmark +'> </div></div>';
-		var pCode = '<div class="form-group"> <label class="control-label col-md-2" for="pCode">Pin Code</label>  <div class="col-md-6"> <input class="form-control" id="pCode" name="pCode" value= '+accountModel.pCode +'> </div></div>';
-		var city = '<div class="form-group"> <label class="control-label col-md-2" for="city">City</label>  <div class="col-md-6"> <input class="form-control" id="city" name="city" value= '+accountModel.city +'> </div></div>';
+		var addr1 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address1</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr1" name="addr1" value= '+addressModel.addr1 +'> </div></div>';
+		var addr2 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address2</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr2" name="addr2" value= '+addressModel.addr2 +'> </div></div>';
+		var landmark = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Landmark</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="landmark" name="landmark" value= '+addressModel.landmark +'> </div></div>';
+		var pCode = '<div class="form-group"> <label class="control-label col-md-2" for="pCode">Pin Code</label>  <div class="col-md-6"> <input class="form-control" id="pCode" name="pCode" value= '+addressModel.pCode +'> </div></div>';
+		var city = '<div class="form-group"> <label class="control-label col-md-2" for="city">City</label>  <div class="col-md-6"> <input class="form-control" id="city" name="city" value= '+addressModel.city +'> </div></div>';
 
 		var state = '<div class="form-group"> <label class="control-label col-md-2" for="state">State</label>  <div class="col-md-6"> ';
 		state += this.getStatesOptionsString();
@@ -85,25 +87,25 @@ define([], function(){
 
 		var formDiv = '<div class="container" id="page2"> <h2>Banking Information</h2><form class="form-horizontal" role="form">';
 		var formGroupAccountName = '<div class="form-group"><label class="control-label col-md-2" for="AccountHolderName">Account Holder Name </label>'+
-																'<div class="col-md-6"><input type="text" class="form-control" name="acHName" id="aHName" placeholder="Enter Account Holder Name" value'+bankInfoModel.acHName+'></div></div>';
+																'<div class="col-md-6"><input type="text" class="form-control" name="acHName" id="aHName" value='+bankInfoModel.holder_name+'></div></div>';
 
 		var formGroupAccountNumber = '<div class="form-group"><label class="control-label col-md-2" for="accountNumber">Bank Account Number </label>'+
-																	'<div class="col-md-6"><input type="password" class="form-control" name="acNumber" id="acNumber" placeholder="Enter Bank Account Number" value'+bankInfoModel.acNumber+'></div></div>';
+																	'<div class="col-md-6"><input type="password" class="form-control" name="acNumber" id="acNumber"  value='+bankInfoModel.acntNumber+'></div></div>';
 
 		var formGroupRetypeAccountNumber = '<div class="form-group"><label class="control-label col-md-2" for="retypeAccountNumber">Retype Bank Account Number </label>'+
-																	'<div class="col-md-6"><input type="text" class="form-control" name="acNumber2" id="acNumber2" placeholder="Retype Bank Account Number" value'+bankInfoModel.acNumber2+'></div></div>';
+																	'<div class="col-md-6"><input type="text" class="form-control" name="acNumber2" id="acNumber2" value='+bankInfoModel.acntNumber2+'></div></div>';
 
 		var formGroupBankName = '<div class="form-group"><label class="control-label col-md-2" for="bankName">Bank Name </label>'+
-															    '<div class="col-md-6"><input type="text" class="form-control" name="bankName" id="bankName" placeholder="Enter Bank Name" value'+bankInfoModel.bankName+'></div></div>';
+															    '<div class="col-md-6"><input type="text" class="form-control" name="bankName" id="bankName" value='+bankInfoModel.bankName+'></div></div>';
 
 		var formGroupBranchName = '<div class="form-group"><label class="control-label col-md-2" for="branchName">Branch Name </label>'+
-															    '<div class="col-md-6"><input type="text" class="form-control" name="branchName" id="branchName" placeholder="Enter Branch Name" value'+bankInfoModel.branchName+'></div></div>';
+															    '<div class="col-md-6"><input type="text" class="form-control" name="branchName" id="branchName" value='+bankInfoModel.branchName+'></div></div>';
 
 		var formGroupIfsc = '<div class="form-group"><label class="control-label col-md-2" for="ifscCode">IFSC Code </label>'+
-															    '<div class="col-md-6"><input type="text" class="form-control" name="ifsc" id="ifsc" placeholder="Enter IFSC Code" value'+bankInfoModel.ifsc+'></div></div>';
+															    '<div class="col-md-6"><input type="text" class="form-control" name="ifsc" id="ifsc"  value='+bankInfoModel.ifsc+'></div></div>';
 
     var formGroupBankCity = '<div class="form-group"><label class="control-label col-md-2" for="bankCity">City </label>'+
-															    '<div class="col-md-6"><input type="text" class="form-control" id="bankCity" placeholder="Enter city"></div></div>';
+															    '<div class="col-md-6"><input type="text" class="form-control" id="bankCity" ></div></div>';
 
 		var formGroupBankState = '<div class="form-group"><label class="control-label col-md-2" for="bankState">State </label>'+
 															    '<div class="col-md-6">'+ this.getStatesOptionsString() + '</div></div>';
@@ -165,28 +167,35 @@ define([], function(){
 
 	};
 
-	this.render = function(container){
+var that = this;
 
-		if(!this.isRendered){
+var renderOnInit = function(){
+
+		if(!that.isRendered){
 			//controller.init();
 		var page1 = $("<div></div>");
-		this.createAccountsPage(page1);
+		that.createAccountsPage(page1);
 
 		var page2 = $("<div/>");
-		this.createBankingInfoPage(page2);
+		that.createBankingInfoPage(page2);
 
 		var page3 = $("<div />");
-		this.createProductInfoPage(page3);
+		that.createProductInfoPage(page3);
 
 		currentPageId = "page1";
-		container.html(page1.html());
-		container.append(page2.html());
-		container.append(page3.html());
+		that.container.html(page1.html());
+		that.container.append(page2.html());
+		that.container.append(page3.html());
 		$("#page2").hide();
 		$("#page3").hide();
-		this.registerEvents(controller);
-		this.isRendered = true;
+		that.registerEvents(controller);
+		that.isRendered = true;
 	}
+}
+	this.render = function(container){
+		this.container = container;
+		this.controller.initModel(this.model,renderOnInit);
+
 	};
 };
 

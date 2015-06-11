@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^authenticate_user/$', 'tesigners.views.authenticate_user', name='authenticate_user'),
     url(r'^orders/$', 'tesigners.views.show_order', name='show_order'),
     url(r'^products/$', 'tesigners.views.store_seller_supported_products', name='store_seller_supported_products'),
+    url(r'^account_details/$', 'tesigners.views.get_seller_details', name='get_seller_details'),
     # url(r'^webserver/', include('webserver.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

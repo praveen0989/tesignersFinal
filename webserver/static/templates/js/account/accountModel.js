@@ -11,7 +11,10 @@ define([], function(){
 			pNumber:'',
 			password:'',
 			vNum:'',
-			cDesc:'',
+			cDesc:''
+		};
+
+		this.accountAddress = {
 			addr1:'',
 			addr2:'',
 			landmark:'',
@@ -21,7 +24,7 @@ define([], function(){
 		};
 
 		this.bankDetails = {
-			holderName : '',
+			holder_name : '',
 			acntNumber: '',
 			acntNumber2:'',
 			bankName:'',

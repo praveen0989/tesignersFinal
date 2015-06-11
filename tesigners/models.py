@@ -87,6 +87,7 @@ class Seller(Document):
     business_name            = StringField(db_field='bn',required=True,default='')
     display_name             = StringField(db_field='dn',required=False,default='')
     company_description      = StringField(db_field='desc',required=False,default='')
+    phone_number             = IntField(db_field='pn',required=True,default='')
     vat                      = StringField(db_field='vat',required=False,default='')
     address                  = ReferenceField(Address,db_field='addr',required=False,reverse_delete_rule=CASCADE)
     bank_acc                 = ReferenceField(BankAccount,db_field='ba',required=False,reverse_delete_rule=CASCADE)

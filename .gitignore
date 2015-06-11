@@ -96,3 +96,6 @@ tesigners/models.pyc
 webserver/__init__.pyc
 webserver/settings.pyc
 webserver/wsgi.pyc
+tesigners/models.pyc
+tesigners/views.pyc
+webserver/urls.pyc

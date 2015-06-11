@@ -179,21 +179,12 @@ def show_order(request):
 
 def get_seller_details(request):
     seller_id = value_from_req(request,'email_id','')
-    
     seller = Seller.objects(email_id=seller_id).first()
-
     if seller:
-        orders = []
-        if order_type == '0':
-            for order in OrderDetails.objects(seller=seller,current_status__lt=7):
-                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+        address = seller.address
+        bank_acc = seller.bank_acc
+        account_info = {'eId':seller_id,'bName':seller.business_name, 'dName':seller.display_name,'cDesc':seller.company_description, 'vNum':seller.vat,'pNumber':seller.phone_number};
+        address_info ={'addr1':address.address_ine_1,'addr2':address.address_ine_2, 'landmark':address.landmark,'state':address.state,'city':address.city,'pCode':address.pincode}
+        bank_info ={'holder_name':bank_acc.holder_name,'acntNumber':bank_acc.account_number, 'bankName':bank_acc.bank_name,'branchName':bank_acc.branch,'ifsc':bank_acc.ifsc}
 
-        elif order_type == '1':
-            for order in OrderDetails.objects(seller=seller,current_status__gte=7, current_status__lte=9):
-                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
-
-        elif order_type == '2':
-            for order in OrderDetails.objects(seller=seller,current_status__gt=9):
-                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
-
-        return HttpResponse(json.dumps({'status':True,'response':orders}, sort_keys=True))
+        return HttpResponse(json.dumps({'status':True,'account_info':account_info,'address_info':address_info,'bank_info':bank_info}))
