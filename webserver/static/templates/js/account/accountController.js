@@ -14,8 +14,11 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 				alert("Signup failed! Try again");
 				}else{
 					//window.location = "/dashboard/";
+					if(response.account_info !=="")
 					model.accountDetails = response.account_info;
+					if(response.bank_info !=="")
 					model.bankDetails = response.bank_info;
+					if(response.address_info !=="")
 					model.accountAddress = response.address_info;
 					renderOnInit();
 				}

@@ -99,3 +99,6 @@ webserver/wsgi.pyc
 tesigners/models.pyc
 tesigners/views.pyc
 webserver/urls.pyc
+tesigners/views.pyc
+webserver/urls.py.orig
+webserver/urls.pyc

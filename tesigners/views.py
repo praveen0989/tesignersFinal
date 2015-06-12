@@ -44,6 +44,7 @@ def authenticate_user(request):
     return HttpResponse(json.dumps({'status':'success','message':'login successful'}))
 
 def create_user(request):
+
     email = value_from_req(request,'eId','')
     password = value_from_req(request,'password','')
     phoneNumber = value_from_req(request,'pNumber','')
@@ -59,7 +60,7 @@ def create_user(request):
     state = value_from_req(request,'state','')
     pincode = value_from_req(request,'pCode','')
 
-    acHName = value_from_req(request,'acHName','')
+    acHName = value_from_req(request,'holder_name','')
     acNumber = value_from_req(request,'acNumber','')
     bankName = value_from_req(request,'bankName','')
     branchName = value_from_req(request,'branchName','')
@@ -67,36 +68,45 @@ def create_user(request):
 
     seller = Seller.objects(email_id = email).first()
     if not seller:
-        address = Address()
-        address.address_ine_1 = addr1
-        address.address_ine_2 = addr2
-        address.landmark = landmark
-        address.city = city
-        address.state = state
-        address.pincode = int('0' +pincode)
-        address.save()
-
-        bankAccount = BankAccount()
-        bankAccount.holder_name = acHName
-        bankAccount.account_number = int('0' +acNumber)
-        bankAccount.bank_name = bankName
-        bankAccount.branch = branchName
-        bankAccount.ifsc = ifsc
-        bankAccount.save()
-
         seller = Seller()
-        seller.email_id = email
-        seller.phoneNumber = phoneNumber
-        seller.business_name = bName
-        seller.display_name = dName
-        seller.company_description = cDesc
-        seller.vat = vNum
+    if seller.address:
+        address = seller.address
+    if not seller.address:
+        address = Address()
+    if seller.bank_acc:
+        bankAccount = seller.bank_acc
+    if not seller.bank_acc:
+        bankAccount = BankAccount()
 
-        seller.address = address
-        seller.bank_acc = bankAccount
+    address.address_ine_1 = addr1
+    address.address_ine_2 = addr2
+    address.landmark = landmark
+    address.city = city
+    address.state = state
+    address.pincode = int_or_0(pincode)
+    address.save()
 
-        seller.save()
+    bankAccount.holder_name = acHName
+    bankAccount.account_number = int_or_0(acNumber)
+    bankAccount.bank_name = bankName
+    bankAccount.branch = branchName
+    bankAccount.ifsc = ifsc
+    bankAccount.save()
+
+    #seller = Seller()
+    seller.email_id = email
+    seller.phone_number = int_or_0(phoneNumber)
+    seller.business_name = bName
+    seller.display_name = dName
+    seller.company_description = cDesc
+    seller.vat = vNum
+
+    seller.address = address
+    seller.bank_acc = bankAccount
+    if not password == '':
         seller.set_password(password)
+
+    seller.save()
 
     #return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
     return HttpResponse(json.dumps({'status':'success','message':'signup successful'}))
@@ -107,7 +117,7 @@ def store_seller_supported_products(request):
     product_list = data['plist']
     printing_type_list = data['ptlist']
 
-    
+
     seller = Seller.objects(email_id=seller_id).first()
     if seller:
         Product.objects(seller=seller).delete()
@@ -192,7 +202,7 @@ def get_seller_supported_products(request):
             order_capacity= printer_type.order_capacity
             printing_price = printer_type.printing_price
             printing_type.append({"k1type": printingType, "k2min_order": min_order, "k3order_capacity" :order_capacity, "k4printing_price" : printing_price})
-        
+
     return HttpResponse(json.dumps({'status':True,'supportedEntities':supportedproducts, 'supportedIds': [], 'supportedPrinters': printing_type}, sort_keys=True))
 
 
@@ -226,6 +236,8 @@ def get_seller_details(request):
         bank_acc = seller.bank_acc
         account_info = {'eId':seller_id,'bName':seller.business_name, 'dName':seller.display_name,'cDesc':seller.company_description, 'vNum':seller.vat,'pNumber':seller.phone_number};
         address_info ={'addr1':address.address_ine_1,'addr2':address.address_ine_2, 'landmark':address.landmark,'state':address.state,'city':address.city,'pCode':address.pincode}
-        bank_info ={'holder_name':bank_acc.holder_name,'acntNumber':bank_acc.account_number, 'bankName':bank_acc.bank_name,'branchName':bank_acc.branch,'ifsc':bank_acc.ifsc}
-
+        bank_info ={'holder_name':bank_acc.holder_name,'acNumber':bank_acc.account_number, 'bankName':bank_acc.bank_name,'branchName':bank_acc.branch,'ifsc':bank_acc.ifsc}
         return HttpResponse(json.dumps({'status':True,'account_info':account_info,'address_info':address_info,'bank_info':bank_info}))
+
+    if not seller:
+        return HttpResponse(json.dumps({'status':True,'account_info':'','address_info':'','bank_info':''}))

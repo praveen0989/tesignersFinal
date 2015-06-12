@@ -24,6 +24,7 @@ define([], function(){
 				jsonData[data[i].name] = data[i].value;
     	}
 			jsonData.state = $("#stateListId").val();
+			jsonData.password = $("#password").val();
 			controller.submitSignupDetails( jsonData);
 		});
 
@@ -59,13 +60,13 @@ define([], function(){
 		var emailId = '<div class="form-group"> <label class="control-label col-md-2" for="eId">Email Id</label>  <div class="col-md-6"> <input class="form-control" id="eId" name="eId" value= '+accountModel.eId +'> </div></div>';
 		var phone = '<div class="form-group"> <label class="control-label col-md-2" for="phoneNumber">Phone Number</label>  <div class="col-md-6"> <input class="form-control" name="pNumber" id="pNumber" value= '+accountModel.pNumber +'> </div></div>';
 		var password = '<div class="form-group"> <label class="control-label col-md-2" for="password">password</label>  <div class="col-md-6"> <input type="password" class="form-control" name="password" id="password" value= '+accountModel.password +'> </div></div>';
-		var businessName = '<div class="form-group"> <label class="control-label col-md-2" for="businessgrp">Legal Name</label>  <div class="col-md-6"> <input class="form-control" name="businessgrp" id="businessgrp" value= '+accountModel.bName +'> </div></div>';
-		var displayName = '<div class="form-group"> <label class="control-label col-md-2" for="displayName">Display Name</label>  <div class="col-md-6"> <input class="form-control" name="displayName" id="displayName" value= '+accountModel.dName +'> </div></div>';
+		var businessName = '<div class="form-group"> <label class="control-label col-md-2" for="businessgrp">Legal Name</label>  <div class="col-md-6"> <input class="form-control" name="bName" id="businessgrp" value= '+accountModel.bName +'> </div></div>';
+		var displayName = '<div class="form-group"> <label class="control-label col-md-2" for="displayName">Display Name</label>  <div class="col-md-6"> <input class="form-control" name="dName" id="displayName" value= '+accountModel.dName +'> </div></div>';
 		var vNum = '<div class="form-group"> <label class="control-label col-md-2" for="vNum">VAT or TIN Number</label>  <div class="col-md-6"> <input class="form-control" id="vNum" name="vNum" value= '+accountModel.vNum +'> </div></div>';
 		var cDesc = '<div class="form-group"> <label class="control-label col-md-2" for="cDesc">Company Description</label>  <div class="col-md-6"> <input class="form-control" id="cDesc" name="cDesc" value= '+accountModel.cDesc +'> </div></div>';
-		var addr1 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address1</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr1" name="addr1" value= '+addressModel.addr1 +'> </div></div>';
-		var addr2 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address2</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="addr2" name="addr2" value= '+addressModel.addr2 +'> </div></div>';
-		var landmark = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Landmark</label>  <div class="col-md-6"> <input class="form-control" type="textarea"  id="landmark" name="landmark" value= '+addressModel.landmark +'> </div></div>';
+		var addr1 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address1</label>  <div class="col-md-6"> <input class="form-control" type="text"  id="addr1" name="addr1" value= '+addressModel.addr1 +'> </div></div>';
+		var addr2 = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Address2</label>  <div class="col-md-6"> <input class="form-control" type="text"  id="addr2" name="addr2" value= '+addressModel.addr2 +'> </div></div>';
+		var landmark = '<div class="form-group"> <label class="control-label col-md-2" for="addr">Landmark</label>  <div class="col-md-6"> <input class="form-control" type="text"  id="landmark" name="landmark" value= '+addressModel.landmark +'> </div></div>';
 		var pCode = '<div class="form-group"> <label class="control-label col-md-2" for="pCode">Pin Code</label>  <div class="col-md-6"> <input class="form-control" id="pCode" name="pCode" value= '+addressModel.pCode +'> </div></div>';
 		var city = '<div class="form-group"> <label class="control-label col-md-2" for="city">City</label>  <div class="col-md-6"> <input class="form-control" id="city" name="city" value= '+addressModel.city +'> </div></div>';
 
@@ -87,13 +88,13 @@ define([], function(){
 
 		var formDiv = '<div class="container" id="page2"> <h2>Banking Information</h2><form class="form-horizontal" role="form">';
 		var formGroupAccountName = '<div class="form-group"><label class="control-label col-md-2" for="AccountHolderName">Account Holder Name </label>'+
-																'<div class="col-md-6"><input type="text" class="form-control" name="acHName" id="aHName" value='+bankInfoModel.holder_name+'></div></div>';
+																'<div class="col-md-6"><input type="text" class="form-control" name="holder_name" id="acHName" value='+bankInfoModel.holder_name+'></div></div>';
 
 		var formGroupAccountNumber = '<div class="form-group"><label class="control-label col-md-2" for="accountNumber">Bank Account Number </label>'+
-																	'<div class="col-md-6"><input type="password" class="form-control" name="acNumber" id="acNumber"  value='+bankInfoModel.acntNumber+'></div></div>';
+																	'<div class="col-md-6"><input type="password" class="form-control" name="acNumber2" id="acNumber"  value='+bankInfoModel.acNumber+'></div></div>';
 
 		var formGroupRetypeAccountNumber = '<div class="form-group"><label class="control-label col-md-2" for="retypeAccountNumber">Retype Bank Account Number </label>'+
-																	'<div class="col-md-6"><input type="text" class="form-control" name="acNumber2" id="acNumber2" value='+bankInfoModel.acntNumber2+'></div></div>';
+																	'<div class="col-md-6"><input type="text" class="form-control" name="acNumber" id="acNumber2" value='+bankInfoModel.acNumber+'></div></div>';
 
 		var formGroupBankName = '<div class="form-group"><label class="control-label col-md-2" for="bankName">Bank Name </label>'+
 															    '<div class="col-md-6"><input type="text" class="form-control" name="bankName" id="bankName" value='+bankInfoModel.bankName+'></div></div>';
