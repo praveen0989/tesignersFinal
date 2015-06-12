@@ -105,7 +105,6 @@ def create_user(request):
     seller.bank_acc = bankAccount
     if not password == '':
         seller.set_password(password)
-
     seller.save()
 
     #return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
@@ -240,4 +239,4 @@ def get_seller_details(request):
         return HttpResponse(json.dumps({'status':True,'account_info':account_info,'address_info':address_info,'bank_info':bank_info}))
 
     if not seller:
-        return HttpResponse(json.dumps({'status':True,'account_info':'','address_info':'','bank_info':''}))
+        return HttpResponse(json.dumps({'status':False,'account_info':'','address_info':'','bank_info':''}))

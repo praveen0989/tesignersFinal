@@ -54,16 +54,11 @@ define([], function(){
 
 						},{
 							"id" : "F7",
-							"name": "Pure Cotton"
+							"name": "Poleyster"
 
 						},
 						{
 							"id" : "F8",
-							"name": "Pure Cotton"
-
-						},
-						{
-							"id" : "F9",
 							"name": "Rayon"
 
 						}];
@@ -105,7 +100,7 @@ define([], function(){
 						{
 							"id":"C3",
 							"name" :"Black"}];
-							
+
 		this.ptlist = [{
 							"k1type" : "",
 							"k2min_order":"",
