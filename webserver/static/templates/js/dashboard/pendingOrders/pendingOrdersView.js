@@ -30,7 +30,8 @@ define([], function(){
 		$('#accountsDiv').css('display','none');
 		$('#ordersDiv').css('display','block');
 
-		controller.getPendingOrders(model,"praveen0989@gmail.com", "0");
+		user = sessionStorage.getItem("user");
+		controller.getPendingOrders(model,user, "0");
 
 
 	}
@@ -41,7 +42,7 @@ define([], function(){
 		container.html("Pending Orders");
 		var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='ordersTable' class='table table-bordered table-hover'></table><div id='tablePager' ></div></div>";
 		container.append(tableDiv);
-		
+
 		$("#ordersTable").jqGrid({
 			datatype: "local",
 			data: this.model.ordersData,
@@ -60,7 +61,7 @@ define([], function(){
 			shrinkToFit: false,
 			pager : "#tablePager",
 			gridComplete : function(){
-			
+
 			//$("#ordersTable").jqGrid('filterToolbar',{searchOperators : true});
 			}
 		});

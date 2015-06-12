@@ -28,6 +28,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 						$('#loginErrorDiv').css("display","block");
 
 					}else{
+						sessionStorage.setItem("user", response.user);
 						window.location = "dashboard";
 					}
 			};

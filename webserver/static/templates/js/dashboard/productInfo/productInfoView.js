@@ -49,7 +49,7 @@ define(["jqGrid"], function(JQGrid){
 
 		$("#saveButton").click(function(){
 				var formData = {};
-				formData.sId = "praveen0989@gmail.com";
+				formData.sId = sessionStorage.getItem("user"); 
 				formData.plist = that.model.supportedEntities;
 				formData.ptlist = [];
 				controller.saveProductDetails(formData);
@@ -74,7 +74,7 @@ define(["jqGrid"], function(JQGrid){
 		$('#metricsDiv').css('display','none');
 		$('#accountsDiv').css('display','none');
 		$('#productDiv').css('display','block');
-		
+
 		controller.initModel(model);
 	};
 

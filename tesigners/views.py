@@ -41,7 +41,7 @@ def authenticate_user(request):
     validLogin = seller.check_password(password)
     if not validLogin:
         return HttpResponse(json.dumps({'status':'failed','message':'Username and password did not match'}))
-    return HttpResponse(json.dumps({'status':'success','message':'login successful'}))
+    return HttpResponse(json.dumps({'status':'success','user':email,'message':'login successful'}))
 
 def create_user(request):
 
@@ -116,8 +116,8 @@ def store_seller_supported_products(request):
     product_list = data['plist']
     printing_type_list = data['ptlist']
 
-
     seller = Seller.objects(email_id=seller_id).first()
+
     if seller:
         Product.objects(seller=seller).delete()
         for item in product_list:

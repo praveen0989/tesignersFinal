@@ -28,8 +28,8 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 			var failureCallBack = function(){
 				//alert("Failure");
 			};
-
-			var jsonData = {"email_id":"amit_oct25@yahoo.com"};
+			user = sessionStorage.getItem("user");
+			var jsonData = {"email_id":user};
 			request.setMimeType("application/json");
 			request.setRequestUrl("/account_details/");
 			request.setXhrRequestType("POST");

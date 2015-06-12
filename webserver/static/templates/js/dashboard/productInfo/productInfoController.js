@@ -18,9 +18,9 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 			var failureCallBack = function(){
 				//alert("Failure");
 			};
-			
-			var jsonData= {'email_id':'praveen0989@gmail.com'};
-			
+			user = sessionStorage.getItem("user");
+			var jsonData= {'email_id':user};
+
 			request.setMimeType("application/json");
 			request.setRequestUrl("/getproducts/");
 			request.setXhrRequestType("POST");
@@ -28,9 +28,9 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 
 			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 		};
-	
-		
-		
+
+
+
 		this.saveProductDetails = function(jsonData){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
