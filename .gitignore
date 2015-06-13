@@ -107,3 +107,5 @@ webserver/urls.pyc
 mongoengine/dereference.pyc
 webserver/urls.pyc
 tesigners/views.pyc
+tesigners/models.pyc
+tesigners/views.pyc

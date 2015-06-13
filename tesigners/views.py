@@ -145,7 +145,7 @@ def store_seller_supported_products(request):
             #product.color=color
             product.sleeves=sleeves
             product.fabric=fabric
-            product.material=int_or_0(material)
+            product.material=material
             product.price=int_or_0(price)
             product.save()
 

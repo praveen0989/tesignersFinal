@@ -124,7 +124,7 @@ class Product(Document):
     color                    =  StringField(db_field='col',required=False)
     sleeves                  =  StringField(db_field='sle',required=False)
     fabric                   =  StringField(db_field='fab',required=False)
-    material                 =  IntField(db_field='mat',required=False)
+    material                 =  StringField(db_field='mat',required=False)
     price                    =  IntField(db_field='ppr')
 
     meta = {
@@ -134,7 +134,7 @@ class Product(Document):
 class PrinterType(Document):
 
     seller                   =  ReferenceField(Seller,db_field='se')
-    type                     =  StringField(db_field='typ',required=False)
+    type                     =  StringField(db_field='ptyp',required=False)
     min_order                =  IntField(db_field='mo',required=False)
     order_capacity           =  IntField(db_field='oc',required=False)
     printing_price           =  IntField(db_field='ptpr',required=False)
