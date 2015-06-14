@@ -108,9 +108,10 @@ def create_user(request):
     seller.save()
 
     #return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
-    return HttpResponse(json.dumps({'status':'success','message':'signup successful'}))
+    return HttpResponse(json.dumps({'status':'success','user':email,'message':'signup successful'}))
 
 def store_seller_supported_products(request):
+    
     data=json.loads(request.body)
     seller_id = data['sId']
     product_list = data['plist']

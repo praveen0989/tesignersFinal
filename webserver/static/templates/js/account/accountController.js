@@ -48,6 +48,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 					if(response.status === "failed"){
 					alert("Signup failed! Try again");
 					}else{
+						sessionStorage.setItem("user", response.user);
 						window.location = "/dashboard/";
 					}
 

@@ -82,7 +82,7 @@ class BankAccount(Document):
              _refs=None, **kwargs)
 
 class Seller(Document):
-    email_id                 = StringField(db_field='eid',required=False,default='')
+    email_id                 = StringField(primary_key=True,db_field='eid',required=False,default='')
     password                 = StringField(db_field='pass',required=False)
     business_name            = StringField(db_field='bn',required=True,default='')
     display_name             = StringField(db_field='dn',required=False,default='')
