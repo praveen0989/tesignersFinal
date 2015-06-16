@@ -28,7 +28,7 @@ define([], function(){
 		this.password = '<input type="password" id="passwordinput" class="form-control" name="password" value="" placeholder="Password"/>';
 		var passwordDiv = '<div id="passworddiv" class="inputDiv form-group">'+ this.password +'</div>';
 
-		this.loginButton = "<input type='button' name='submitButton' id='submitButton' class='btn btn-primary loginBtn' value='LOGIN'/>";
+		this.loginButton = "<input type='submit' name='submitButton' id='submitButton' class='btn btn-primary loginBtn' value='LOGIN'/>";
 		var loginButtonDiv = "<div id='loginButtonDiv' class=' buttonDiv'>"+ this.loginButton +"</div>";
 
 		var loginErrorDiv = "<div id='loginErrorDiv' class='loginErrorDiv'></div>";

@@ -10,13 +10,13 @@ urlpatterns = patterns('',
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
     url(r'^$', 'tesigners.views.index', name='home'),
     url(r'^new_user/$', 'tesigners.views.create_user', name='create_user'),
-    url(r'^signup/$', 'tesigners.views.signup', name='signup_user'),
+    url(r'^signup/$', 'tesigners.views.sellerSignup', name='sellerSignup'),
     url(r'^dashboard/$', 'tesigners.views.dashboard', name='dashboard'),
-    url(r'^authenticate_user/$', 'tesigners.views.authenticate_user', name='authenticate_user'),
+    url(r'^authenticate_user/$', 'tesigners.views.authenticate_seller', name='authenticate_seller'),
     url(r'^orders/$', 'tesigners.views.show_order', name='show_order'),
     url(r'^products/$', 'tesigners.views.store_seller_supported_products', name='store_seller_supported_products'),
     url(r'^account_details/$', 'tesigners.views.get_seller_details', name='get_seller_details'),
-    url(r'^getproducts/$', 'tesigners.views.get_seller_supported_products', name='get_seller_supported_products')
+    url(r'^getproducts/$', 'tesigners.views.get_seller_supported_products', name='get_seller_supported_products'),
     # url(r'^webserver/', include('webserver.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -26,4 +26,4 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
 )
 
-urlpatterns+= staticfiles_urlpatterns()
+#urlpatterns+= staticfiles_urlpatterns()

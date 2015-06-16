@@ -11,8 +11,9 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 				response = JSON.parse(response);
 				model.supportedEntities = response.supportedEntities;
 				model.supportedIds = response.supportedIds;
-				model.supportedPrinters = response.supportedPrinters;
+				model.supportedPrintingTypes = response.supportedPrinters;
 				$("#productsTable").jqGrid('setGridParam', { datatype: 'local', sortname: 'T-Shirt type',sortorder: "asc",data: model.supportedEntities }).trigger('reloadGrid');
+				$("#printerTypeTable").jqGrid('setGridParam', { datatype: 'local', sortname: 'Printing Type',sortorder: "asc",data: model.supportedPrintingTypes }).trigger('reloadGrid');
 			};
 
 			var failureCallBack = function(){

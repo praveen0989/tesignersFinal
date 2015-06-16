@@ -82,7 +82,7 @@ class BankAccount(Document):
              _refs=None, **kwargs)
 
 class Seller(Document):
-    email_id                 = StringField(primary_key=True,db_field='eid',required=False,default='')
+    email_id                 = StringField(db_field='eid',required=False)
     password                 = StringField(db_field='pass',required=False)
     business_name            = StringField(db_field='bn',required=True,default='')
     display_name             = StringField(db_field='dn',required=False,default='')
@@ -134,10 +134,11 @@ class Product(Document):
 class PrinterType(Document):
 
     seller                   =  ReferenceField(Seller,db_field='se')
-    type                     =  StringField(db_field='ptyp',required=False)
+    pttype                   =  StringField(db_field='ptyp',required=False)
     min_order                =  IntField(db_field='mo',required=False)
     order_capacity           =  IntField(db_field='oc',required=False)
     printing_price           =  IntField(db_field='ptpr',required=False)
+    tat                      =  IntField(db_field='tat',required=False)
 
 class Seller_Product(Document):
 
