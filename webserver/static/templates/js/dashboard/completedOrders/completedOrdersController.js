@@ -6,8 +6,23 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 		var requestDispatcher = new RequestDispatcher();
 		var request = new Request();
 
+		this.saveStateChange = function(data){
+			var successCallBack = function(response){
+				window.location = "/dashboard/";
+			};
 
-		this.getCompletedOrders = function(model, email_id, type){
+			var failureCallBack = function(){
+			};
+
+			request.setMimeType("application/json");
+			request.setRequestUrl("/savestate/");
+			request.setXhrRequestType("POST");
+			var jsonData = {"email_id" : sessionStorage.getItem("user"), "stch" : data, "type" : 1};
+			request.setRequestData(JSON.stringify(jsonData));
+			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
+		};
+
+		this.getCompletedOrders = function(model){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
 			var successCallBack = function(response){
@@ -20,7 +35,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 				//alert("Failure");
 			};
 
-			var dataJson = {'email_id':email_id, 'type':type};
+			var dataJson = {'email_id': sessionStorage.getItem("user"), 'type':"1"};
 
 			request.setMimeType("application/json");
 			request.setRequestUrl("/orders/");
