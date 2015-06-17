@@ -6,10 +6,6 @@ from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
 from tesigners.models import *
 
-completedOrder_min_status = 5
-returnedOrder_min_status = 8
-
-
 def value_from_req(request,key,default):
     value = getattr(request, 'GET').get(key)
     if not value:
@@ -127,10 +123,8 @@ def save_state(request):
             order.previous_status.append(order.current_status)
             if order_type == 0:
                 order.current_status = item['finalStatus']
-            elif order_type == 1:
-                order.current_status = item['finalStatus'] + completedOrder_min_status
             elif order_type == 2:
-                order.current_status = item['finalStatus'] + returnedOrder_min_status
+                order.current_status = 12
             order.save()
 
     return HttpResponse(json.dumps({'status':'success','user':seller_id,'message':'states changed'}))
@@ -244,16 +238,17 @@ def show_order(request):
     if seller:
         orders = []
         if order_type == '0':
-            for order in OrderDetails.objects(seller=seller,current_status__lt=5):
+            for order in OrderDetails.objects(seller=seller,current_status__lt=8):
                 orders.append({'key0oid': order.order_id, 'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
 
         elif order_type == '1':
-            for order in OrderDetails.objects(seller=seller,current_status__gte=5, current_status__lte=7):
-                orders.append({'key0oid': order.order_id,'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status - completedOrder_min_status})
+            for order in OrderDetails.objects(seller=seller,current_status = 8):
+                orders.append({'key0oid': order.order_id,'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':0})
 
+        #in case of cancelled orders, order state starts with 9(Cancelled by seller)
         elif order_type == '2':
-            for order in OrderDetails.objects(seller=seller,current_status__gt=7):
-                orders.append({'key0oid': order.order_id,'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status - returnedOrder_min_status})
+            for order in OrderDetails.objects(seller=seller,current_status__gte=9):
+                orders.append({'key0oid': order.order_id,'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status - 9})
 
         return HttpResponse(json.dumps({'status':True,'response':orders}, sort_keys=True))
 

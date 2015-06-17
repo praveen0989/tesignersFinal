@@ -9,16 +9,6 @@ define([], function(){
 	this. phoneNumber;
 
 	this.registerEvents = function(controller){
-		var that = this;
-		var data = [];
-		$("#completedSaveButton").click(function(){
-			for (i = 0; i < that.model.changedIndices.length; i++){
-				data.push({"oid" : that.model.ordersData[that.model.changedIndices[i]].key0oid,
-							"finalStatus" : that.model.ordersData[that.model.changedIndices[i]].key5status});		
-			}
-			controller.saveStateChange(data);
-			
-		});
 	};
 
 	this.renderPendingOrders = function(container){
@@ -48,9 +38,6 @@ define([], function(){
 		var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='ordersTable' class='table table-bordered table-hover'></table></div>";
 		container.append(tableDiv);
 		
-		var saveButton = "<div class='col-md-1 col-md-offset-8'><button name='saveButton' id='completedSaveButton' type='button' class='form-control btn btn-primary'>Save</button></div></div>	";
-		container.append(saveButton);
-
 		var that = this;
 		$("#ordersTable").jqGrid({
 			datatype: "local",
