@@ -107,10 +107,32 @@ define([], function(){
 							"k3order_capacity":"",
 							"k4printing_price":""
 					  }];
+		this.printingType = [
+							{
+								"id":"PT1",
+								"name":"Digital printing"
+							},
+							{
+								"id":"PT2",
+								"name":"Screen printing"
+							},
+							{
+								"id":"PT3",
+								"name":"Rubberized printing"
+							},
+							{
+								"id":"PT4",
+								"name":"Sublimation"
+							},
+							{
+								"id":"PT5",
+								"name":"DTG"
+						}];
 
 		this.supportedEntities = [];
 		this.supportedIds = [];
-		this.supportedPrinters=[];
+		this.supportedPrintingTypes=[];
+		this.supportedPrintingTypeIds = [];
 	};
 	return ProductInfoModel;
 });

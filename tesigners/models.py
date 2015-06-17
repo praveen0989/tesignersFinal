@@ -134,10 +134,11 @@ class Product(Document):
 class PrinterType(Document):
 
     seller                   =  ReferenceField(Seller,db_field='se')
-    type                     =  StringField(db_field='ptyp',required=False)
+    pttype                   =  StringField(db_field='ptyp',required=False)
     min_order                =  IntField(db_field='mo',required=False)
     order_capacity           =  IntField(db_field='oc',required=False)
     printing_price           =  IntField(db_field='ptpr',required=False)
+    tat                      =  IntField(db_field='tat',required=False)
 
 class Seller_Product(Document):
 

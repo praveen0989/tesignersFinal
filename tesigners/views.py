@@ -2,8 +2,8 @@ import json
 import pdb
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
-from django.core.urlresolvers import reverse
 from tesigners.models import *
 
 completedOrder_min_status = 5
@@ -30,13 +30,13 @@ def index(request):
 def dashboard(request):
     return render_to_response("dashboard.html",locals(),context_instance=RequestContext(request))
 
-def login(request):
-    return render_to_response("dashboard.html",locals(),context_instance=RequestContext(request))
+#def login(request):
+    #return render_to_response("dashboard.html",locals(),context_instance=RequestContext(request))
 
-def signup(request):
+def sellerSignup(request):
     return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
 
-def authenticate_user(request):
+def authenticate_seller(request):
     email = value_from_req(request,'email_id','')
     password = value_from_req(request,'password','')
     seller = Seller.objects(email_id = email).first()
@@ -136,7 +136,7 @@ def save_state(request):
     return HttpResponse(json.dumps({'status':'success','user':seller_id,'message':'states changed'}))
 
 def store_seller_supported_products(request):
-    
+
     data=json.loads(request.body)
     seller_id = data['sId']
     product_list = data['plist']
@@ -175,17 +175,21 @@ def store_seller_supported_products(request):
             product.price=int_or_0(price)
             product.save()
 
+        PrinterType.objects(seller=seller).delete()
         for item in printing_type_list:
-            printingType = item['k1type']
-            min_order = item['k2min_order']
-            order_capacity= item['k3order_capacity']
-            printing_price = item['k4printing_price']
+            printingType = item['k1pttype']
+            min_order = item['k2ptminqty']
+            order_capacity= item['k3capperday']
+            printing_tat = item['k4tat']
+            printing_price = item['k5ptprice']
+
 
             printer_type = PrinterType()
             printer_type.seller = seller;
-            printer_type.type = printingType;
+            printer_type.pttype = printingType;
             printer_type.min_order = int_or_0(min_order);
             printer_type.order_capacity = int_or_0(order_capacity)
+            printer_type.tat = int_or_0(printing_tat)
             printer_type.printing_price = int_or_0(printing_price)
             printer_type.save()
 
@@ -222,11 +226,12 @@ def get_seller_supported_products(request):
     printing_type = []
     if printing_type_list:
         for printer_type in printing_type_list:
-            printingType = printer_type.type
+            printingType = printer_type.pttype
             min_order = printer_type.min_order
             order_capacity= printer_type.order_capacity
+            printing_tat = printer_type.tat
             printing_price = printer_type.printing_price
-            printing_type.append({"k1type": printingType, "k2min_order": min_order, "k3order_capacity" :order_capacity, "k4printing_price" : printing_price})
+            printing_type.append({"k1pttype": printingType, "k2ptminqty": min_order, "k3capperday" :order_capacity, "k4tat" : printing_tat,"k5ptprice" : printing_price})
 
     return HttpResponse(json.dumps({'status':True,'supportedEntities':supportedproducts, 'supportedIds': [], 'supportedPrinters': printing_type}, sort_keys=True))
 
