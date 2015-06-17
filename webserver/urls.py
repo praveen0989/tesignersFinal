@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^products/$', 'tesigners.views.store_seller_supported_products', name='store_seller_supported_products'),
     url(r'^account_details/$', 'tesigners.views.get_seller_details', name='get_seller_details'),
     url(r'^getproducts/$', 'tesigners.views.get_seller_supported_products', name='get_seller_supported_products'),
+    url(r'^savestate/$', 'tesigners.views.save_state', name='save_state')
     # url(r'^webserver/', include('webserver.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

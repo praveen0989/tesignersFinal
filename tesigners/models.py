@@ -82,7 +82,7 @@ class BankAccount(Document):
              _refs=None, **kwargs)
 
 class Seller(Document):
-    email_id                 = StringField(db_field='eid',required=False)
+    email_id                 = StringField(db_field='eid',required=False,default='')
     session_id               = StringField(db_field='sesid',required=False)
     password                 = StringField(db_field='pass',required=False)
     business_name            = StringField(db_field='bn',required=True,default='')
@@ -156,7 +156,7 @@ class ShippingDetails(Document):
 
 
 class OrderDetails(Document):
-
+    order_id                 = StringField(db_field='oid')
     product                  =  ReferenceField(Product,db_field='pr')
     printing_type            =  ReferenceField(PrinterType,db_field='pt')
     quantity                 =  IntField(db_field='qua',required=False)
@@ -176,6 +176,7 @@ class OrderDetails(Document):
              _refs=None, **kwargs):
         if not self.id:
             self.created_at = int(time())
+            self.order_id = str(int(time()))
         self.updated_at = int(time())
         super(OrderDetails, self).save(force_insert=False, validate=True, clean=True,
              write_concern=None,  cascade=None, cascade_kwargs=None,

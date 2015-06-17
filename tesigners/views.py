@@ -126,6 +126,25 @@ def create_user(request):
     #return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
     return HttpResponse(json.dumps({'status':'success','user':email,'message':'signup successful'}))
 
+def save_state(request):
+    data = json.loads(request.body)
+    seller_id = data['email_id']
+    chStates = data['stch']
+    order_type = data['type']
+    seller = Seller.objects(email_id=seller_id).first()
+    if seller:
+        for item in chStates:
+            #, order.order_id = item.oi
+            order = OrderDetails.objects(seller = seller, order_id = item['oid']).first()
+            order.previous_status.append(order.current_status)
+            if order_type == 0:
+                order.current_status = item['finalStatus']
+            elif order_type == 2:
+                order.current_status = 12
+            order.save()
+
+    return HttpResponse(json.dumps({'status':'success','user':seller_id,'message':'states changed'}))
+
 def store_seller_supported_products(request):
 
     data=json.loads(request.body)
@@ -228,26 +247,24 @@ def get_seller_supported_products(request):
 
 
 def show_order(request):
+    
     seller_id = value_from_req(request,'email_id','')
     order_type = value_from_req(request,'type','')
-
     seller = Seller.objects(email_id=seller_id).first()
     if seller:
         orders = []
         if order_type == '0':
-            for order in OrderDetails.objects(seller=seller,current_status__lt=7):
-                if order:
-                    orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+            for order in OrderDetails.objects(seller=seller,current_status__lt=8):
+                orders.append({'key0oid': order.order_id, 'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
 
         elif order_type == '1':
-            for order in OrderDetails.objects(seller=seller,current_status__gte=7, current_status__lte=9):
-                if order:
-                    orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+            for order in OrderDetails.objects(seller=seller,current_status = 8):
+                orders.append({'key0oid': order.order_id,'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':0})
 
+        #in case of cancelled orders, order state starts with 9(Cancelled by seller)
         elif order_type == '2':
-            for order in OrderDetails.objects(seller=seller,current_status__gt=9):
-                if order:
-                    orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+            for order in OrderDetails.objects(seller=seller,current_status__gte=9):
+                orders.append({'key0oid': order.order_id,'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status - 9})
 
         return HttpResponse(json.dumps({'status':True,'response':orders}, sort_keys=True))
 

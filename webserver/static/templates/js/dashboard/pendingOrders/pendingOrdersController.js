@@ -5,7 +5,21 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 		this.app = app;
 		var requestDispatcher = new RequestDispatcher();
 		var request = new Request();
+		this.saveStateChange = function(data){
+			var successCallBack = function(response){
+				window.location = "/dashboard/";
+			};
 
+			var failureCallBack = function(){
+			};
+
+			request.setMimeType("application/json");
+			request.setRequestUrl("/savestate/");
+			request.setXhrRequestType("POST");
+			var jsonData = {"email_id" : sessionStorage.getItem("user"), "stch" : data, "type" : 0};
+			request.setRequestData(JSON.stringify(jsonData));
+			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
+		};
 
 		this.getPendingOrders = function(model, email_id, type){
 
