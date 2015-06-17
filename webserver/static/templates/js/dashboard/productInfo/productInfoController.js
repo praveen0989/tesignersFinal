@@ -1,10 +1,11 @@
 
-define(["common/requestDispatcher", "common/request"], function(RequestDispatcher, Request){
+define(["common/requestDispatcher", "common/request", "common/sessionHandler"], function(RequestDispatcher, Request, SessionHandler){
 	var ProductInfoController = function(app){
 
 		this.app = app;
 		var requestDispatcher = new RequestDispatcher();
 		var request = new Request();
+		var sessionHandler = new SessionHandler();
 
 		this.initModel = function(model){
 			var successCallBack = function(response){
@@ -19,7 +20,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 			var failureCallBack = function(){
 				//alert("Failure");
 			};
-			user = sessionStorage.getItem("user");
+			user = sessionHandler.getCookieValue("user");
 			var jsonData= {'email_id':user};
 
 			request.setMimeType("application/json");

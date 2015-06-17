@@ -1,10 +1,11 @@
 
-define(["common/requestDispatcher", "common/request"], function(RequestDispatcher, Request){
+define(["common/requestDispatcher", "common/request","common/sessionHandler"], function(RequestDispatcher, Request,SessionHandler){
 	var AccountController = function(app){
 
 		this.app = app;
 		var requestDispatcher = new RequestDispatcher();
 		var request = new Request();
+		var sessionHandler = new SessionHandler();
 
 		this.initModel = function(model, renderOnInit){
 
@@ -28,7 +29,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 			var failureCallBack = function(){
 				//alert("Failure");
 			};
-			user = sessionStorage.getItem("user");
+			var user = sessionHandler.getCookieValue("user");
 			var jsonData = {"email_id":user};
 			request.setMimeType("application/json");
 			request.setRequestUrl("/account_details/");
@@ -48,8 +49,8 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 					if(response.status === "failed"){
 					alert("Signup failed! Try again");
 					}else{
-						sessionStorage.setItem("user", response.user);
-						window.location = "/dashboard/";
+						//sessionStorage.setItem("user", response.user);
+						window.location = "/login/";
 					}
 
 				};

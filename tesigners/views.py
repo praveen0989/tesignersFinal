@@ -1,5 +1,6 @@
 import json
 import pdb
+import uuid
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404, render
@@ -20,14 +21,16 @@ def int_or_0(value):
     except:
         return 0
 
+def generate_session_id():
+    uid = uuid.uuid4()
+    uid_str = uid.urn[9:]
+    return uid_str
+
 def index(request):
     return render_to_response("index.html",locals(),context_instance=RequestContext(request))
 
 def dashboard(request):
     return render_to_response("dashboard.html",locals(),context_instance=RequestContext(request))
-
-#def login(request):
-    #return render_to_response("dashboard.html",locals(),context_instance=RequestContext(request))
 
 def sellerSignup(request):
     return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
@@ -38,10 +41,23 @@ def authenticate_seller(request):
     seller = Seller.objects(email_id = email).first()
     if not seller:
         return HttpResponse(json.dumps({'status':'failed','message':'User does not exist'}))
+
     validLogin = seller.check_password(password)
+
     if not validLogin:
         return HttpResponse(json.dumps({'status':'failed','message':'Username and password did not match'}))
-    return HttpResponse(json.dumps({'status':'success','user':email,'message':'login successful'}))
+
+    sessionId = generate_session_id()
+    seller.session_id = sessionId
+    seller.save()
+    return HttpResponse(json.dumps({'status':'success','user':email,'sessionId':sessionId,'message':'login successful'}))
+
+def validate_session(request):
+    session_id = value_from_req(request,'sessionId','')
+    seller = Seller.objects(session_id = session_id).first()
+    if not seller:
+        return HttpResponse(json.dumps({'status':'failed','message':'Please login'}))
+    return HttpResponse(json.dumps({'status':'success','user':seller.email_id,'sessionId':session_id,'message':'login successful'}))
 
 def create_user(request):
 
@@ -216,20 +232,22 @@ def show_order(request):
     order_type = value_from_req(request,'type','')
 
     seller = Seller.objects(email_id=seller_id).first()
-
     if seller:
         orders = []
         if order_type == '0':
             for order in OrderDetails.objects(seller=seller,current_status__lt=7):
-                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+                if order:
+                    orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
 
         elif order_type == '1':
             for order in OrderDetails.objects(seller=seller,current_status__gte=7, current_status__lte=9):
-                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+                if order:
+                    orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
 
         elif order_type == '2':
             for order in OrderDetails.objects(seller=seller,current_status__gt=9):
-                orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
+                if order:
+                    orders.append({'key1img':order.design_image,'key2description':order.product.type,'key3qty':order.quantity,'key4price':order.price,'key5status':order.current_status})
 
         return HttpResponse(json.dumps({'status':True,'response':orders}, sort_keys=True))
 

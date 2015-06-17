@@ -10,7 +10,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 		this.onSignUp = function(userName, password, phoneNumber){
 
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
-			window.location = "signup"
+			window.location = "/signup/"
 
 		/*	var successCallBack = function(response){
 				//response = JSON.parse(response);

@@ -1,5 +1,5 @@
 
-define(["dashboardcomponents", "controller", "model", "view"], function(Components, Controller, Model, View){
+define(["dashboardcomponents", "controller", "model", "view","common/sessionHandler"], function(Components, Controller, Model, View, SessionHandler){
 
 var DashBoardApp = function(){
 	this.controller;
@@ -11,9 +11,11 @@ var DashBoardApp = function(){
 	this.container;
 	this.bodyContainer;
 	this.modalDiv = "<div id='modalDiv'> <div id='modalContent'></div></div>";
-	
+	var sessionHandler = new SessionHandler();
+
 	this.create = function(component){
-		this.components = Components;	
+		sessionHandler.validateSession();
+		this.components = Components;
 		this.controller = new Controller();
 		this.model = new Model();
 		this.view = new View(this.controller, this.model);
@@ -23,7 +25,7 @@ var DashBoardApp = function(){
 		this.view.render(this.headerContainer);
 		this.loadComponent(component);
 	};
-	
+
 	this.loadComponent = function(id, container){
 		var component = this.components[id];
 		var componentInstance = component.module();
@@ -31,7 +33,7 @@ var DashBoardApp = function(){
 		this.loadedComponents.push(componentMap);
 		componentInstance.create(this, container);
 	};
-	
+
 	this.getComponent = function(id) {
 		var i;
 		for( i = 0; i< this.loadedComponents.length; i++){
@@ -40,15 +42,15 @@ var DashBoardApp = function(){
 			}
 		}
 	};
-	
+
 	this.closeModalDialog = function(){
 		var el = document.getElementById("modalDiv");
 		el.style.visibility = "hidden";
-	
+
 	};
-	
+
 	this.showModalDialog = function(callback, cssText){
-		
+
 		var css = cssText || "position:absolute;top :25%;left : 25%;width:50%;height : 50%;background-color: #fff;border:1px solid #000;padding:15px;";
 		var modalDivRef = document.getElementById("modalDiv");
 		if(!modalDivRef){
@@ -60,6 +62,6 @@ var DashBoardApp = function(){
 		callback($('#modalContent'));
 	};
 	};
-	
+
 	return DashBoardApp;
 });

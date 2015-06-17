@@ -1,9 +1,10 @@
-define(["common/requestDispatcher", "common/request"], function(RequestDispatcher, Request){
+define(["common/requestDispatcher", "common/request","common/sessionHandler"], function(RequestDispatcher, Request,SessionHandler){
 	var LoginController = function(app){
 
 		this.app = app;
 		var requestDispatcher = new RequestDispatcher();
 		var request = new Request();
+		var sessionHandler = new SessionHandler();
 
 
 		this.onLogin = function(userName, password){
@@ -28,8 +29,11 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 						$('#loginErrorDiv').css("display","block");
 
 					}else{
-						sessionStorage.setItem("user", response.user);
-						window.location = "dashboard";
+						//var sSessionId = response.sessionId;
+						sessionHandler.setCookieValue("sessionId", response.sessionId, 1);
+						sessionHandler.setCookieValue("user", response.user, 1);
+						//sessionStorage.setItem("user", response.user);
+						window.location = "/dashboard/";
 					}
 			};
 
@@ -37,9 +41,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 				//alert("Failure");
 			};
 
-			var dataJson = {"email_id":userName,
-											"password":password
-											};
+			var dataJson = {"email_id":userName,"password":password	};
 
 			request.setMimeType("application/json");
 			request.setRequestUrl("/authenticate_user/");
