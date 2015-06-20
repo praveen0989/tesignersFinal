@@ -13,7 +13,7 @@
 
 #bodyDiv{
 	height: 75%;
-        margin-top: 80px;
+  margin-top: 80px;
 }
 
 #footerDiv{
@@ -80,9 +80,9 @@ h1.logo {
 }
 .sell-in-tesigners{
 	padding: 3em 0;
-  	position: relative;
-  	z-index: 99999;
-  	background: #fff;
+  position: relative;
+  z-index: 99999;
+  background: #fff;
 }
 
 .icon {
