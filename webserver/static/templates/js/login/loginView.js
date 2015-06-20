@@ -30,10 +30,12 @@ define([], function(){
 
 		this.loginButton = "<input type='submit' name='submitButton' id='submitButton' class='btn btn-primary loginBtn' value='LOGIN'/>";
 		var loginButtonDiv = "<div id='loginButtonDiv' class=' buttonDiv'>"+ this.loginButton +"</div>";
-
+		
+		this.signupButton = "<input type='button' name='signUpButton' id='signUpButton' class='btn btn-primary loginBtn' value='SIGN UP'/>";
+		
 		var loginErrorDiv = "<div id='loginErrorDiv' class='loginErrorDiv'></div>";
 
-		container.append( loginContainer + loginDiv + passwordDiv + this.loginButton + loginErrorDiv + divClose );
+		container.append( loginContainer + loginDiv + passwordDiv + this.loginButton + this.signupButton + loginErrorDiv + divClose );
 		this.registerEvents(controller);
 	};
 };
