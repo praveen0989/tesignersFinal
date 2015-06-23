@@ -1,7 +1,8 @@
-define(["jqGrid"], function(JQGrid){
+define(["jqGrid", "common/sessionHandler"], function(JQGrid, SessionHandler){
 	var ProductInfoView = function(controller, model){
 	this.controller = controller;
 	this.model = model;
+	var sessionHandler = new SessionHandler();
 	this.loginloginButton;
 	this.userName;
 	this.password;
@@ -78,7 +79,7 @@ define(["jqGrid"], function(JQGrid){
 
 		$("#saveButton").click(function(){
 				var formData = {};
-				formData.sId = sessionStorage.getItem("user");
+				formData.sId = sessionHandler.getCookieValue("user");
 				formData.plist = that.model.supportedEntities;
 				formData.ptlist = that.model.supportedPrintingTypes;
 				controller.saveProductDetails(formData);
