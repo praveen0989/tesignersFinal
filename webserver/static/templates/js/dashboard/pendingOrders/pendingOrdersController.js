@@ -16,7 +16,7 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 			request.setMimeType("application/json");
 			request.setRequestUrl("/savestate/");
 			request.setXhrRequestType("POST");
-			var jsonData = {"email_id" : sessionStorage.getItem("user"), "stch" : data, "type" : 0};
+			var jsonData = {"email_id" : sessionHandler.getCookieValue("user"), "stch" : data, "type" : 0};
 			request.setRequestData(JSON.stringify(jsonData));
 			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 		};
