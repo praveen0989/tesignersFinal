@@ -17,6 +17,7 @@ define([], function(){
 		$("#signUpButton").click(function(){
 				window.location = "/signup/";
 		});
+
 	};
 
 

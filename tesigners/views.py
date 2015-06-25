@@ -63,6 +63,15 @@ def validate_session(request):
         return HttpResponse(json.dumps({'status':'failed','message':'Please login'}))
     return HttpResponse(json.dumps({'status':'success','user':seller.email_id,'sessionId':session_id,'message':'login successful'}))
 
+def logout_session(request):
+    session_id = value_from_req(request,'sessionId','')
+    seller = Seller.objects(session_id = session_id).first()
+    if seller:
+        seller.session_id = ''
+        seller.save()
+        return HttpResponse(json.dumps({'status':'success'}))
+
+
 def activate_user(request):
     email = value_from_req(request,'email','')
     activation_code = value_from_req(request,'activationcode','')
@@ -71,7 +80,7 @@ def activate_user(request):
         if not seller.is_active:
             seller.is_active = '1'
             seller.save()
-            return render_to_response("index.html",locals(),context_instance=RequestContext(request))
+    return render_to_response("index.html",locals(),context_instance=RequestContext(request))
 
 def makeId(size=8, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))

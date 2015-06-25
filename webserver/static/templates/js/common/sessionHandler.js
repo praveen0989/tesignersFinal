@@ -40,7 +40,11 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
             } else {
                   var successCallBack = function(response){
                     response = JSON.parse(response);
+                    if(response.status === 'success'){
                       that.setCookieValue("user", response.user, 1);
+                    } else {
+                      window.location = "/login/";
+                    }
                   };
 
                   var failureCallBack = function(){
@@ -62,12 +66,14 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
         that = this;
         var sSessionId = this.getCookieValue("sessionId");
           if (!sSessionId) {
-          //  window.location = "/login/";
+          // window.location = "/login/";
           } else {
                 var successCallBack = function(response){
                   response = JSON.parse(response);
+                  if(response.status === 'success'){
                     that.setCookieValue("user", response.user, 1);
                     window.location = "/dashboard/";
+                  }
                 };
 
                 var failureCallBack = function(){

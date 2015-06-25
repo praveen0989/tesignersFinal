@@ -12,7 +12,8 @@ var CoreApp = function(){
 	this.bodyContainer;
 	this.modalDiv = "<div id='modalDiv'> <div id='modalContent'></div></div>";
 	var sessionHandler = new SessionHandler();
-
+	sessionHandler.validateSessionInLogin();
+	
 	this.create = function(component){
 		this.components = Components;
 		this.controller = new Controller();
@@ -26,7 +27,7 @@ var CoreApp = function(){
 	};
 
 	this.loadComponent = function(id, container){
-		sessionHandler.validateSessionInLogin();
+
 		var component = this.components[id];
 		var componentInstance = component.module();
 		var componentMap = {"id" : id, "object" : componentInstance};

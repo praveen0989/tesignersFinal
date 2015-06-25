@@ -16,11 +16,11 @@ define(["common/requestDispatcher", "common/request","common/sessionHandler"], f
 				}else{
 					//window.location = "/dashboard/";
 					if(response.account_info !=="")
-					model.accountDetails = response.account_info;
+						model.accountDetails = response.account_info;
 					if(response.bank_info !=="")
-					model.bankDetails = response.bank_info;
+						model.bankDetails = response.bank_info;
 					if(response.address_info !=="")
-					model.accountAddress = response.address_info;
+						model.accountAddress = response.address_info;
 					renderOnInit();
 				}
 
@@ -39,8 +39,6 @@ define(["common/requestDispatcher", "common/request","common/sessionHandler"], f
 			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 
 		};
-
-
 
 		this.submitSignupDetails = function(jsonData){
 			//alert(CryptoJS.SHA3("ABC",{ outputLength: 512 }));
@@ -66,8 +64,6 @@ define(["common/requestDispatcher", "common/request","common/sessionHandler"], f
 
 				requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 		};
-
-
 
 	};
 	return AccountController;

@@ -51,8 +51,6 @@ define(["common/requestDispatcher", "common/request","common/sessionHandler"], f
 			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 		};
 
-
-
 	};
 	return LoginController;
 });
