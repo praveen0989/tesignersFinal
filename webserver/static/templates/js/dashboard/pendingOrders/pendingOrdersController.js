@@ -1,10 +1,12 @@
 
-define(["common/requestDispatcher", "common/request"], function(RequestDispatcher, Request){
+define(["common/requestDispatcher", "common/request","common/sessionHandler"], function(RequestDispatcher, Request,SessionHandler){
 	var PendingOrdersController = function(app){
 
 		this.app = app;
 		var requestDispatcher = new RequestDispatcher();
 		var request = new Request();
+		var sessionHandler = new SessionHandler();
+		
 		this.saveStateChange = function(data){
 			var successCallBack = function(response){
 				window.location = "/dashboard/";
@@ -28,13 +30,15 @@ define(["common/requestDispatcher", "common/request"], function(RequestDispatche
 				response = JSON.parse(response);
 				model.ordersData = response.response;
 				$("#ordersTable").jqGrid('setGridParam', { datatype: 'local', data: model.ordersData }).trigger('reloadGrid');
+				//$("#ordersTable").append("<img src='" +  response.key1img + "'></img>")
+				
 			};
 
 			var failureCallBack = function(){
 				//alert("Failure");
 			};
 
-			var dataJson = {'email_id':email_id, 'type':type};
+			var dataJson = {'email_id':sessionHandler.getCookieValue("user"), 'type':type};
 
 			request.setMimeType("application/json");
 			request.setRequestUrl("/orders/");

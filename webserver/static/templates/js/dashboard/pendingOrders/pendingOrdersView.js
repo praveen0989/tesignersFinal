@@ -63,7 +63,9 @@ define([], function(){
 			colNames:['Order ID', 'Image','Description', 'Quantity','Price', 'Status'],
 			colModel:[
 				{name:'key0oid',index:'key0oid'},
-				{name:'key1img',index:'key1img'},
+				{name:'key1img',index:'key1img', formatter : function(value){
+					return "<img src= "+ value +" class='dispImg'></img>"
+				}},
 				{name:'key2description',index:'key2description'},
 				{name:'key3qty',index:'key3qty'},
 				{name:'key4price',index:'key4price'},

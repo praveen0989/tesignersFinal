@@ -103,3 +103,7 @@ h1.logo {
 .dashboardItemVisible{
 	display : block;
 }
+
+.dispImg{
+	width :50px;
+}
