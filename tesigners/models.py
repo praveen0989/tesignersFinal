@@ -83,6 +83,8 @@ class BankAccount(Document):
 
 class Seller(Document):
     email_id                 = StringField(db_field='eid',required=False,default='')
+    activation_code          = StringField(db_field='acode',required=False)
+    is_active                = StringField(db_field='isactv',required=False)
     session_id               = StringField(db_field='sesid',required=False)
     password                 = StringField(db_field='pass',required=False)
     business_name            = StringField(db_field='bn',required=True,default='')

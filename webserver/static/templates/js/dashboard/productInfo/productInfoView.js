@@ -1,17 +1,14 @@
-define(["jqGrid"], function(JQGrid){
+define(["jqGrid", "common/sessionHandler"], function(JQGrid, SessionHandler){
 	var ProductInfoView = function(controller, model){
 	this.controller = controller;
 	this.model = model;
+	var sessionHandler = new SessionHandler();
 	this.loginloginButton;
 	this.userName;
 	this.password;
 	this.keepMeLoggedIn;
 	this. phoneNumber;
-
 	this.isRendered = false;
-
-
-
 
 	this.registerEvents = function(controller){
 		var that = this;
@@ -78,7 +75,7 @@ define(["jqGrid"], function(JQGrid){
 
 		$("#saveButton").click(function(){
 				var formData = {};
-				formData.sId = sessionStorage.getItem("user");
+				formData.sId = sessionHandler.getCookieValue("user");
 				formData.plist = that.model.supportedEntities;
 				formData.ptlist = that.model.supportedPrintingTypes;
 				controller.saveProductDetails(formData);
@@ -106,17 +103,16 @@ define(["jqGrid"], function(JQGrid){
 		var printingType = "<div class='col-md-1'> <select name='printingType' class='form-control' id='printingType'>";
 		printingType+= populateOptions(this.model.printingType);
 
-		var minOrderQty = "<div class='col-md-1'> <input type='text' id='minOrderQty' class ='input-sm' /></div>";
-		var capPerday = "<div class='col-md-1'> <input type='text' id='capPerday' class ='input-sm' /></div>";
-		var tat = "<div class='col-md-1'> <input type='text' id='tat' class ='input-sm' /></div>";
-		var price = "<div class='col-md-1'> <input type='text' id='ptPrice' class ='input-sm' /></div>";
+		var minOrderQty = "<div class='col-md-1'> <input type='text' id='minOrderQty' class ='form-control' /></div>";
+		var capPerday = "<div class='col-md-1'> <input type='text' id='capPerday' class ='form-control' /></div>";
+		var tat = "<div class='col-md-1'> <input type='text' id='tat' class ='form-control' /></div>";
+		var price = "<div class='col-md-1'> <input type='text' id='ptPrice' class ='form-control' /></div>";
 
 		var addButton = "<div class='col-md-1 col-md-offset-1'><button name='ptAddButton' id='ptAddButton' type='button' class='form-control btn-primary'>Add</button></div></div>	";
 		container.append( printingTypeDiv + printingTypeLabel + printingType + minOrderQty + capPerday + tat + price + addButton + divClose);
 
 		var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='printerTypeTable' class='table table-bordered table-hover'></table><div id='ptTablePager' ></div></div>";
 		container.append(tableDiv);
-
 
 					var that = this;
 					$("#printerTypeTable").jqGrid({
@@ -159,7 +155,7 @@ define(["jqGrid"], function(JQGrid){
 		                height: "auto"
 		            });
 
-								jQuery("#printerTypeTable").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
+						jQuery("#printerTypeTable").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : false});
 
 	}
 
@@ -179,6 +175,7 @@ define(["jqGrid"], function(JQGrid){
 		if(!this.isRendered){
 			var divClose = "</div>";
 
+			var pageContainer = '<div id="productPage"> <h2>Product Information</h2></div>';
 			var categorySelectDiv = "<div class='form-horizontal'><div id='categorySelectDiv' class='form-group'><div class='col-md-2'><label name='categorySelectLabel'>Please select your category</label></div><div class='col-md-1'><select id='categorySelect' name='categorySelect' class='form-control'>";
 			categorySelectDiv += populateOptions(this.model.categories) + "</div></div>";
 
@@ -197,14 +194,17 @@ define(["jqGrid"], function(JQGrid){
 			var tshirtGsmCategories = "<div class='col-md-1'> <select name='tshirtGsmType' class='form-control' id='tshirtGsmType'>";
 			tshirtGsmCategories+= populateOptions(this.model.tshirtGsm);
 
-			var tshirtprice = "<div class='col-md-1'> <input type='text' id='tsprice' class ='input-sm' /></div>";
+			var tshirtprice = "<div class='col-md-1'> <input type='text' id='tsprice' class ='form-control' /></div>";
 
 			var addButton = "<div class='col-md-1 col-md-offset-1'><button name='addButton' id='addButton' type='button' class='form-control btn-primary'>Add</button></div></div>	";
-			container.append( categorySelectDiv + divClose + subcategoryDiv + subcategoryLabel + tShirtCategories + tShirtFabricsCategories + tshirtSleevesCategories + tshirtGsmCategories + tshirtprice + addButton + divClose);
+			container.append( pageContainer + categorySelectDiv + divClose + subcategoryDiv + subcategoryLabel + tShirtCategories + tShirtFabricsCategories + tshirtSleevesCategories + tshirtGsmCategories + tshirtprice + addButton + divClose);
 
 
 			var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='productsTable' class='table table-bordered table-hover'></table><div id='tablePager' ></div></div>";
 			container.append(tableDiv);
+
+			var dummyPaddingDiv = "<div class='row' style='height:30px;'><hr></div>";
+			container.append(dummyPaddingDiv);
 
 			this.createPrintingTypeDiv(container);
 

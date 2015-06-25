@@ -9,7 +9,7 @@ define([], function(){
 	this. phoneNumber;
 
 	var renderComponent = function(id, container, type){
-		
+
 		var component = controller.app.getComponent(id);
 		if(!component){
 			controller.app.loadComponent(id, container,type);
@@ -38,7 +38,7 @@ define([], function(){
 		});
 
 		$("#logout").click(function(){
-
+				controller.logout();
 		});
 
 		$("#transactions").click(function(){

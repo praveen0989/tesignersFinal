@@ -10,10 +10,14 @@ define([], function(){
 
 	this.registerEvents = function(controller){
 		var that = this;
-		$("#submitButton").click(function(){
-
+		$("#loginButton").click(function(){
 			controller.onLogin($("#usernameinput").val(), $("#passwordinput").val());
 		});
+
+		$("#signUpButton").click(function(){
+				window.location = "/signup/";
+		});
+
 	};
 
 
@@ -28,11 +32,11 @@ define([], function(){
 		this.password = '<input type="password" id="passwordinput" class="form-control" name="password" value="" placeholder="Password"/>';
 		var passwordDiv = '<div id="passworddiv" class="inputDiv form-group">'+ this.password +'</div>';
 
-		this.loginButton = "<input type='submit' name='submitButton' id='submitButton' class='btn btn-primary loginBtn' value='LOGIN'/>";
+		this.loginButton = "<input type='submit' name='loginButton' id='loginButton' class='btn btn-primary loginBtn' value='LOGIN'/>";
 		var loginButtonDiv = "<div id='loginButtonDiv' class=' buttonDiv'>"+ this.loginButton +"</div>";
-		
+
 		this.signupButton = "<input type='button' name='signUpButton' id='signUpButton' class='btn btn-primary loginBtn' value='SIGN UP'/>";
-		
+
 		var loginErrorDiv = "<div id='loginErrorDiv' class='loginErrorDiv'></div>";
 
 		container.append( loginContainer + loginDiv + passwordDiv + this.loginButton + this.signupButton + loginErrorDiv + divClose );

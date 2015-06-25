@@ -12,9 +12,10 @@ var DashBoardApp = function(){
 	this.bodyContainer;
 	this.modalDiv = "<div id='modalDiv'> <div id='modalContent'></div></div>";
 	var sessionHandler = new SessionHandler();
-
+  sessionHandler.validateSession();
+	
 	this.create = function(component){
-		sessionHandler.validateSession();
+
 		this.components = Components;
 		this.controller = new Controller();
 		this.model = new Model();

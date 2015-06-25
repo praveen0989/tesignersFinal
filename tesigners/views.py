@@ -1,7 +1,8 @@
 import json
 import pdb
-import uuid
+import uuid, string, random
 from django.http import HttpResponse
+from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404, render
 from django.template import RequestContext
@@ -43,9 +44,12 @@ def authenticate_seller(request):
         return HttpResponse(json.dumps({'status':'failed','message':'User does not exist'}))
 
     validLogin = seller.check_password(password)
-
     if not validLogin:
         return HttpResponse(json.dumps({'status':'failed','message':'Username and password did not match'}))
+
+    isActive = seller.is_active
+    if not isActive or isActive == '0':
+        return HttpResponse(json.dumps({'status':'failed','message':'Please activate your account'}))
 
     sessionId = generate_session_id()
     seller.session_id = sessionId
@@ -58,6 +62,42 @@ def validate_session(request):
     if not seller:
         return HttpResponse(json.dumps({'status':'failed','message':'Please login'}))
     return HttpResponse(json.dumps({'status':'success','user':seller.email_id,'sessionId':session_id,'message':'login successful'}))
+
+def logout_session(request):
+    session_id = value_from_req(request,'sessionId','')
+    seller = Seller.objects(session_id = session_id).first()
+    if seller:
+        seller.session_id = ''
+        seller.save()
+        return HttpResponse(json.dumps({'status':'success'}))
+
+
+def activate_user(request):
+    email = value_from_req(request,'email','')
+    activation_code = value_from_req(request,'activationcode','')
+    seller = Seller.objects(email_id = email).first()
+    if seller:
+        if not seller.is_active:
+            seller.is_active = '1'
+            seller.save()
+    return render_to_response("index.html",locals(),context_instance=RequestContext(request))
+
+def makeId(size=8, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+def sendMail(email, dName, activation_code):
+    to_list = [email]
+    subject = 'New user signup at Tesigners.com'
+    activationLink = "http://localhost:8000/activateuser?email="+email+"&activationcode="+activation_code;
+    text_content = 'Hi '+ dName + ', Welcome to Tesigners.com ! Please click on the link below to activate your account'+activationLink
+    #html_content = '<p>Hi <strong>'+dName +'</h3> Welcome to Tesigners.com ! </h3> Please click on the link below to activate your account<a>'+activationLink+'</a></p>'
+    html_content = "<div>Hi "+dName+",<br><br><b>Welcome at Tesigners !</b><br><br>This is a confirmation email for your registration at Tesigners.com"
+    html_content+="<br>You're just one click away from the exciting new adventure of creating your own designer Tees."
+    html_content+="<br><br><h3>Click on this activation link to activate your user account <a href='"+activationLink+"'>Activate my account</a></h3>"
+    html_content+="\n\nKindly ignore this email if not requested for the same.<br><br>Best Regards,<h4>The Tesigners Team, <br><a href='www.Tesigners.com'>www.Tesigners.com</a></h4><div>"
+    msg = EmailMultiAlternatives(subject, text_content, 'tesigner.lab@gmail.com', to_list)
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
 
 def create_user(request):
 
@@ -81,6 +121,7 @@ def create_user(request):
     bankName = value_from_req(request,'bankName','')
     branchName = value_from_req(request,'branchName','')
     ifsc = value_from_req(request,'ifsc','')
+    activation_code = makeId()
 
     seller = Seller.objects(email_id = email).first()
     if not seller:
@@ -119,12 +160,15 @@ def create_user(request):
 
     seller.address = address
     seller.bank_acc = bankAccount
+    seller.activation_code = activation_code
     if not password == '':
         seller.set_password(password)
     seller.save()
-
+    sendMail(email,dName,activation_code)
     #return render_to_response("signup.html",locals(),context_instance=RequestContext(request))
     return HttpResponse(json.dumps({'status':'success','user':email,'message':'signup successful'}))
+
+
 
 def save_state(request):
     data = json.loads(request.body)
@@ -247,7 +291,7 @@ def get_seller_supported_products(request):
 
 
 def show_order(request):
-    
+
     seller_id = value_from_req(request,'email_id','')
     order_type = value_from_req(request,'type','')
     seller = Seller.objects(email_id=seller_id).first()
