@@ -325,3 +325,12 @@ def get_seller_details(request):
 
     if not seller:
         return HttpResponse(json.dumps({'status':False,'account_info':'','address_info':'','bank_info':''}))
+
+def download_template(request):
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="productDetails.xlsx"'
+    return response
+    
+
+
+    

@@ -22,6 +22,8 @@ urlpatterns = patterns('',
     url(r'^savestate/$', 'tesigners.views.save_state', name='save_state'),
     url(r'^activateuser/$', 'tesigners.views.activate_user', name='activate_user'),
     url(r'^logout_session/$', 'tesigners.views.logout_session', name='logout_session'),
+    url(r'^downloadTemplate/$', 'tesigners.views.download_template', name='download_template')
+                       
     # url(r'^webserver/', include('webserver.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

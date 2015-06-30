@@ -51,6 +51,26 @@ define(["common/requestDispatcher", "common/request", "common/sessionHandler"], 
 
 			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
 		};
+		
+		this.downloadTemplate = function(){
+			var successCallBack = function(response){
+				window.location = "/downloadTemplate"
+			};
+
+			var failureCallBack = function(){
+				//alert("Failure");
+			};
+
+			request.setMimeType("application/json");
+			request.setRequestUrl("/downloadTemplate/");
+			request.setXhrRequestType("POST");
+			request.setRequestData("");
+
+			requestDispatcher.executeRequest(request, successCallBack, failureCallBack);
+		};
+		
+		
+		
 
 	};
 	return ProductInfoController;

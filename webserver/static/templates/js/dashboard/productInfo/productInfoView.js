@@ -80,6 +80,12 @@ define(["jqGrid", "common/sessionHandler"], function(JQGrid, SessionHandler){
 				formData.ptlist = that.model.supportedPrintingTypes;
 				controller.saveProductDetails(formData);
 		});
+		
+		
+		$('#downloadButton').click(function(){
+			controller.downloadTemplate();
+		});
+		
 
 	};
 
@@ -196,9 +202,14 @@ define(["jqGrid", "common/sessionHandler"], function(JQGrid, SessionHandler){
 
 			var tshirtprice = "<div class='col-md-1'> <input type='text' id='tsprice' class ='form-control' /></div>";
 
-			var addButton = "<div class='col-md-1 col-md-offset-1'><button name='addButton' id='addButton' type='button' class='form-control btn-primary'>Add</button></div></div>	";
-			container.append( pageContainer + categorySelectDiv + divClose + subcategoryDiv + subcategoryLabel + tShirtCategories + tShirtFabricsCategories + tshirtSleevesCategories + tshirtGsmCategories + tshirtprice + addButton + divClose);
-
+			var addButton = "<div class='col-md-1 col-md-offset-1'><button name='addButton' id='addButton' type='button' class='form-control btn-primary'>Add</button></div>";
+			
+			var downloadButton = "<div class='col-md-1 col-md-offset-1'><button name='downloadButton' id='downloadButton' type='button' class='form-control btn-primary'>Download</button></div>";
+			
+			var uploadFile = "<div class='col-md-1 col-md-offset-1'><input type= 'file' name='uploadFile' id='uploadFile' >Upload File</input></div></div>";
+			
+			container.append( pageContainer + categorySelectDiv + divClose + subcategoryDiv + subcategoryLabel + tShirtCategories + tShirtFabricsCategories + tshirtSleevesCategories + tshirtGsmCategories + tshirtprice + addButton + downloadButton + uploadFile + divClose);
+	
 
 			var tableDiv = "<div id='tableDiv' class='col-md-10 col-md-offset-2'><table id='productsTable' class='table table-bordered table-hover'></table><div id='tablePager' ></div></div>";
 			container.append(tableDiv);
